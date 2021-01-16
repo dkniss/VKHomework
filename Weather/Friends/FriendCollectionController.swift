@@ -20,6 +20,7 @@ class FriendCollectionController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        NetworkService.loadPhotos(token: Session.shared.token)
         
     }
 

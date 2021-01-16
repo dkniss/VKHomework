@@ -29,6 +29,10 @@ class UserGroupsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NetworkService.loadGroups(token: Session.shared.token)
+        
+        NetworkService.loadSearchedGroups(token: Session.shared.token)
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Поиск по группам"

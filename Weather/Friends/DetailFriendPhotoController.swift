@@ -29,6 +29,8 @@ class DetailFriendPhotoController: UIViewController {
         
        
         
+       
+        
         
         photo.image = user?.photoAlbum[photoId]
         photo.isUserInteractionEnabled = true

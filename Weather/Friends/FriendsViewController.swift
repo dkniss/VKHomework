@@ -44,6 +44,9 @@ class FriendsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NetworkService.loadFriends(token: Session.shared.token)
+        
+        
         filteredFriends = friends
         
         
