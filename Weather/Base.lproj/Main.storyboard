@@ -342,7 +342,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="drk-wF-rm4">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="drk-wF-rm4" customClass="AvatarImage" customModule="Weather" customModuleProvider="target">
                                             <rect key="frame" x="20" y="2" width="40" height="40.5"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40.000000000000057" id="Auv-0Q-Efz"/>

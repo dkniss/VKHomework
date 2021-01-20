@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class UserGroupCell: UITableViewCell {
     
@@ -22,6 +23,12 @@ class UserGroupCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configure(with groups: Group) {
+        groupName.text = String(groups.name)
+        let url = URL(string: groups.photo)
+        groupAvatar.kf.setImage(with: url)
     }
 
 }

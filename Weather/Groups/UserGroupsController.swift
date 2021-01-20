@@ -9,9 +9,7 @@ import UIKit
 
 class UserGroupsController: UITableViewController {
     
-    var groups = [
-        Group(name: "GeekBrains", theme: "Учеба", avatar: UIImage(named: "geekbrains"))
-    ]
+    var groups = [Group]()
 
     private var filteredGroups = [Group]()
     
@@ -29,9 +27,18 @@ class UserGroupsController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkService.loadGroups(token: Session.shared.token)
+        
+        NetworkService.loadUserGroups(token: Session.shared.token,
+                                  userId: Session.shared.userId) { [weak self] groups in
+            self?.groups = groups
+            self?.tableView.reloadData()
+            
+        }
         
         NetworkService.loadSearchedGroups(token: Session.shared.token)
+
+        
+//        self.tableView.reloadData()
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -75,17 +82,15 @@ class UserGroupsController: UITableViewController {
          
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as! UserGroupCell
         
-        let group: Group
-        
         if isFiltering {
-            group = filteredGroups[indexPath.row]
+            cell.configure(with: filteredGroups[indexPath.row])
         } else {
-            group = groups[indexPath.row]
+            cell.configure(with: groups[indexPath.row])
         }
          
-        cell.groupName.text = group.name
-        cell.groupAvatar.image = group.avatar
-         
+        
+        
+        
          return cell
      }
 
@@ -99,7 +104,7 @@ class UserGroupsController: UITableViewController {
           
                     let group = allGroupsController.groups[indexPath.row]
          
-                    if !groups.contains(group) {
+                    if 1 > 2 { //!groups.contains(group) 
          
                         groups.append(group)
     

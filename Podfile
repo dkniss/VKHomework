@@ -9,6 +9,10 @@ target 'Weather' do
 
   pod 'Alamofire', '~> 5.2'
 
+  pod 'SwiftyJSON', '~> 5.0.0'
+
+  pod 'Kingfisher', '~> 6.0.1'
+
   target 'WeatherTests' do
     inherit! :search_paths
     # Pods for testing

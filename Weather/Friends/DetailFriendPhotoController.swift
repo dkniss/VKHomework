@@ -63,9 +63,10 @@ class DetailFriendPhotoController: UIViewController {
             print(photoId)
             
            
+           
        
             UIImageView.animateKeyframes(withDuration: 1.5, delay: 0, options: [], animations: {
-                
+
                 UIImageView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.25) {
                     self.photo.transform = .init(scaleX: 0.7, y: 0.7)
                     self.previousPhoto.transform = .init(scaleX: 0.7, y: 0.7)
@@ -80,7 +81,7 @@ class DetailFriendPhotoController: UIViewController {
                     self.photo.transform = .init(scaleX: 1, y: 1)
                     self.previousPhoto.transform = .init(scaleX: 1, y: 1)
                     self.nextPhoto.transform = .init(scaleX: 1, y: 1)
-                    
+
                 }
             }, completion: { _ in self.photo.image = self.nextPhoto.image })
             
@@ -91,6 +92,8 @@ class DetailFriendPhotoController: UIViewController {
             
             
         } else {
+            
+            
             
             UIImageView.animateKeyframes(withDuration: 0.5, delay: 0, options: [], animations: {
             
@@ -122,10 +125,6 @@ class DetailFriendPhotoController: UIViewController {
             print(photoId)
             
             previousPhoto.frame = CGRect(x: -500, y: photo.frame.origin.y, width: photo.frame.width, height: photo.frame.height)
-            
-            
-            print(view.center.y)
-            
             previousPhoto.contentMode = .scaleAspectFit
             self.view.addSubview(previousPhoto)
             previousPhoto.image = user?.photoAlbum[photoId - 1]

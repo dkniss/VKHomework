@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class AllGroupsCell: UITableViewCell {
     @IBOutlet weak var allGroupsAvatar: UIImageView!
@@ -23,4 +24,10 @@ class AllGroupsCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func configure(with groups: Group) {
+        allGroupsName.text = String(groups.name)
+        let url = URL(string: groups.photo)
+        allGroupsAvatar.kf.setImage(with: url)
+    
+    }
 }

@@ -9,16 +9,16 @@ import UIKit
 
 class AllGroupsController: UITableViewController {
     
-    var groups = [
-        Group(name: "Кошки", theme: "Животные", avatar: UIImage(named: "cat")),
-        Group(name: "Dodge", theme: "Автомобили", avatar: UIImage(named: "dodge")),
-        Group(name: "Клуб любителей Виски", theme: "Алкоголь", avatar: UIImage(named: "whiskey")),
-        Group(name: "Магазин одежды", theme: "Одежда", avatar: UIImage(named: "women_bag")),
-    ]
+    var groups = [Group]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        NetworkService.loadAllGroups(token: Session.shared.token) { [weak self] groups in
+            self?.groups = groups
+            self?.tableView.reloadData()
+        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -43,11 +43,7 @@ class AllGroupsController: UITableViewController {
         
             let cell = tableView.dequeueReusableCell(withIdentifier: "AllGroupsCell", for: indexPath) as! AllGroupsCell
             
-            let group = groups[indexPath.row]
-            
-          
-        cell.allGroupsName.text = group.name
-        cell.allGroupsAvatar.image = group.avatar
+        cell.configure(with: groups[indexPath.row])
 
             return cell
         }
