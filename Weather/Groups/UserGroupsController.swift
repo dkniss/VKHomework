@@ -104,8 +104,8 @@ class UserGroupsController: UITableViewController {
           
                     let group = allGroupsController.groups[indexPath.row]
          
-                    if 1 > 2 { //!groups.contains(group) 
-         
+                    if !groups.contains(group) {
+                        
                         groups.append(group)
     
                         tableView.reloadData()
