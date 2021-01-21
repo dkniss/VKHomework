@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FriendCell: UICollectionViewCell {
     
@@ -35,6 +36,12 @@ class FriendCell: UICollectionViewCell {
             isLiked = false
         }
             
+    }
+    
+    func configure(with photos: Photo) {
+        let url = URL(string: photos.url)
+        photo.kf.setImage(with: url)
+        photo.contentMode = .scaleAspectFill
     }
     
     func animateLikeButton() {

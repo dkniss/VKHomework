@@ -26,6 +26,7 @@
 		4D1B316C25825FB300D1C5DC /* AllGroupsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B316B25825FB300D1C5DC /* AllGroupsController.swift */; };
 		4D1B317125826BE800D1C5DC /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B317025826BE800D1C5DC /* User.swift */; };
 		4D1B317E25826CE900D1C5DC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B317D25826CE900D1C5DC /* Group.swift */; };
+		4D285C7925B9DB1200547F55 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D285C7825B9DB1200547F55 /* Photo.swift */; };
 		4D5CA2A625B31B5E0088D9C5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */; };
 		4D8BC39425AF64B2002F4098 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8BC39325AF64B2002F4098 /* Session.swift */; };
 		4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93B325890CC9007FEDFF /* Graphics.swift */; };
@@ -86,6 +87,7 @@
 		4D1B316B25825FB300D1C5DC /* AllGroupsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllGroupsController.swift; sourceTree = "<group>"; };
 		4D1B317025826BE800D1C5DC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4D1B317D25826CE900D1C5DC /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		4D285C7825B9DB1200547F55 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		4D8BC39325AF64B2002F4098 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		4DAF93B325890CC9007FEDFF /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				4D1B317025826BE800D1C5DC /* User.swift */,
 				4D1B317D25826CE900D1C5DC /* Group.swift */,
 				4DAF93F5258E38A4007FEDFF /* News.swift */,
+				4D285C7825B9DB1200547F55 /* Photo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -530,6 +533,7 @@
 				4DB750F525AB352200D53FB9 /* CustomNavigationController.swift in Sources */,
 				4D1B316725825F9D00D1C5DC /* AllGroupsCell.swift in Sources */,
 				4D1B314F2582588C00D1C5DC /* FriendCell.swift in Sources */,
+				4D285C7925B9DB1200547F55 /* Photo.swift in Sources */,
 				4D1B317E25826CE900D1C5DC /* Group.swift in Sources */,
 				4D5CA2A625B31B5E0088D9C5 /* NetworkService.swift in Sources */,
 				4D07B33A25780ED200575C70 /* VKLoginViewController.swift in Sources */,

@@ -13,12 +13,6 @@ struct Group: Codable {
     var photo: String
     var name: String 
     
-    enum CodingKeys: String, CodingKey {
-        case id
-        case photo = "photo_50"
-        case name
-        
-    }
     
     init(_ json: JSON) {
         self.id = json["id"].intValue

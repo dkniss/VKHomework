@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FriendsCell: UITableViewCell {
     
@@ -25,4 +26,11 @@ class FriendsCell: UITableViewCell {
         
     }
 
+    func configure(with friends: User) {
+        username.text = String(friends.firstName + " " + friends.lastName)
+        
+        let url = URL(string: friends.photo)
+        avatar.kf.setImage(with: url)
+        avatar.contentMode = .scaleAspectFill
+    }
 }

@@ -6,16 +6,17 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailFriendPhotoController: UIViewController {
     
     @IBOutlet weak var photo: UIImageView!
     
-    var photoAlbum = [UIImage]()
+
     
-    var selectedPhoto: UIImage?
+    var userPhoto = [Photo]()
     
-    var user: User?
+    var selectedPhoto: Photo?
     
     var previousPhoto = UIImageView()
     
@@ -27,12 +28,10 @@ class DetailFriendPhotoController: UIViewController {
 
         super.viewDidLoad()
         
-       
+        let url = URL(string: selectedPhoto!.url)
+        photo.kf.setImage(with: url)
         
-       
-        
-        
-        photo.image = user?.photoAlbum[photoId]
+//        photo.image = selectedPhoto
         photo.isUserInteractionEnabled = true
         
         
@@ -48,17 +47,20 @@ class DetailFriendPhotoController: UIViewController {
         
     }
     
+   
+    
     @objc private func leftSwipe(_ gesture: UISwipeGestureRecognizer) {
         
         
-        if photoId < (user?.photoAlbum.count)! - 1 {
+        if photoId < userPhoto.count - 1 {
             
             
             
             nextPhoto.frame = CGRect(x: 500, y: photo.frame.origin.y , width: photo.frame.width, height: photo.frame.height)
             nextPhoto.contentMode = .scaleAspectFit
             self.view.addSubview(nextPhoto)
-            nextPhoto.image = user?.photoAlbum[photoId + 1]
+            let url = URL(string: userPhoto[photoId + 1].url)
+            nextPhoto.kf.setImage(with: url)
             
             print(photoId)
             
@@ -127,7 +129,8 @@ class DetailFriendPhotoController: UIViewController {
             previousPhoto.frame = CGRect(x: -500, y: photo.frame.origin.y, width: photo.frame.width, height: photo.frame.height)
             previousPhoto.contentMode = .scaleAspectFit
             self.view.addSubview(previousPhoto)
-            previousPhoto.image = user?.photoAlbum[photoId - 1]
+            let url = URL(string: userPhoto[photoId - 1].url)
+            previousPhoto.kf.setImage(with: url)
             
             UIImageView.animateKeyframes(withDuration: 1.5, delay: 0, options: [], animations: {
             

@@ -13,6 +13,8 @@ class FriendCollectionController: UICollectionViewController {
     
     var user: User?
     
+    var photo = [Photo]()
+    
     var photoId = 0
     
     var friend = [User]()
@@ -20,7 +22,10 @@ class FriendCollectionController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkService.loadPhotos(token: Session.shared.token)
+        NetworkService.loadPhotos(token: Session.shared.token, ownerId: user!.id) { [weak self] photos in
+            self?.photo = photos
+            self?.collectionView.reloadData()
+        }
         
     }
 
@@ -30,7 +35,7 @@ class FriendCollectionController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (user?.photoAlbum.count)!
+        return photo.count
      }
     
     
@@ -38,18 +43,17 @@ class FriendCollectionController: UICollectionViewController {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as! FriendCell
         
-    
-        cell.photo.image = user?.photoAlbum[indexPath.row]
-        cell.photo.contentMode = .scaleAspectFill
- 
+        cell.configure(with: photo[indexPath.row])
+        
+        
+        
         return cell
         
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        
-        guard let selectedPhoto = user?.photoAlbum[indexPath.row] else { return }
+        let selectedPhoto = photo[indexPath.row]
         
         photoId = indexPath.row
         
@@ -62,10 +66,9 @@ class FriendCollectionController: UICollectionViewController {
             
             guard let detailVC = segue.destination as? DetailFriendPhotoController else { return }
             
-            guard let selectedPhoto = sender as? UIImage else { return }
+            guard let selectedPhoto = sender as? Photo else { return }
             
-            
-            detailVC.user = self.user
+            detailVC.userPhoto = photo
             detailVC.selectedPhoto = selectedPhoto
             detailVC.photoId = photoId
             

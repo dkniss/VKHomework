@@ -62,49 +62,57 @@ class NetworkService {
     }
     
     
-    static func loadFriends(token: String) {
+    static func loadFriends(token: String, completion: @escaping ([User]) -> Void ) {
         let host = "https://api.vk.com"
         let path = "/method/friends.get"
         
         let params: Parameters = [
             "access_token": token,
-            "v": "5.126"
+            "v": "5.126",
+            "fields": "photo_50"
         ]
         
-        AF.request(host + path, method: .get, parameters: params).responseJSON { json in
-            print(json)
+        AF.request(host + path, method: .get, parameters: params).responseData { response in
+            switch response.result {
+            case .success(let data):
+                let json = JSON(data)
+                let friendsJSONs = json["response"]["items"].arrayValue
+                let friends = friendsJSONs.compactMap { User($0) }
+                friends.forEach { print($0.firstName) }
+                completion(friends)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     
-    static func loadPhotos(token: String) {
+    static func loadPhotos(token: String, ownerId: Int, completion: @escaping ([Photo]) -> Void ) {
         let host = "https://api.vk.com"
         let path = "/method/photos.get"
         
         let params: Parameters = [
             "access_token": token,
+            "owner_id": ownerId,
             "album_id": "profile",
+            "photo_sizes": 1,
             "v": "5.126"
         ]
         
-        AF.request(host + path, method: .get, parameters: params).responseJSON { json in
-            print(json)
+        AF.request(host + path, method: .get, parameters: params).responseData { response in
+            switch response.result{
+            case .success(let data):
+                let json = JSON(data)
+                let photosJSONs = json["response"]["items"].arrayValue
+                print("PHOTOSJSONS: \(photosJSONs)")
+                let photos = photosJSONs.compactMap { Photo($0) }
+                photos.forEach { print($0.id) }
+                completion(photos)
+            case .failure(let error):
+                print(error)
+            }
         }
     }
     
-    static func loadSearchedGroups(token: String) {
-        let host = "https://api.vk.com"
-        let path = "/method/groups.search"
-        
-        let params: Parameters = [
-            "access_token": token,
-            "q": "Music",
-            "v": "5.126",
-            
-        ]
-        
-        AF.request(host + path, method: .get, parameters: params).responseJSON { json in
-            print("Load Searched Groups")
-        }
-    }
+ 
     
 }

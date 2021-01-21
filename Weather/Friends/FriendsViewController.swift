@@ -9,22 +9,11 @@ import UIKit
 
 class FriendsViewController: UITableViewController {
     
-    var friends = [
-        User(firstName: "Иван", lastName: "Иванов", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo1"), UIImage(named: "photo2"), UIImage(named: "photo3")]),
-        User(firstName: "Наталья", lastName: "Порохина", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo4"), UIImage(named: "photo5")]),
-        User(firstName: "Михаил", lastName: "Астафьев", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo6"), UIImage(named: "photo7"), UIImage(named: "photo8")]),
-        User(firstName: "София", lastName: "Романова", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo1"), UIImage(named: "photo4"), UIImage(named: "photo6"), UIImage(named: "photo8")]),
-        User(firstName: "Борис", lastName: "Парфенов", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo5"), UIImage(named: "photo2"), UIImage(named: "photo1"), UIImage(named: "photo3"), UIImage(named: "photo6"), UIImage(named: "photo8"), UIImage(named: "photo7"), UIImage(named: "photo4")]),
-        User(firstName: "Наталья", lastName: "Потапова", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo3"), UIImage(named: "photo7"), UIImage(named: "photo2")]),
-        User(firstName: "Василий", lastName: "Калинкин", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo4"), UIImage(named: "photo5")]),
-        User(firstName: "Анастасия", lastName: "Попова", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo1"), UIImage(named: "photo4"), UIImage(named: "photo6"), UIImage(named: "photo8")]),
-        User(firstName: "Вячеслав", lastName: "Муравьев", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo6"), UIImage(named: "photo7"), UIImage(named: "photo8")]),
-        User(firstName: "Геннадий", lastName: "Захаров", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo5"), UIImage(named: "photo2"), UIImage(named: "photo1"), UIImage(named: "photo3"), UIImage(named: "photo6"), UIImage(named: "photo8"), UIImage(named: "photo7"), UIImage(named: "photo4")]),
-        User(firstName: "Маргарита", lastName: "Румянцева", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo4"), UIImage(named: "photo5")]),
-        User(firstName: "Филлип", lastName: "Борисов", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo3"), UIImage(named: "photo7"), UIImage(named: "photo2")]),
-        User(firstName: "Юрий", lastName: "Котов", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo1"), UIImage(named: "photo4"), UIImage(named: "photo6"), UIImage(named: "photo8")]),
-        User(firstName: "Евгений", lastName: "Романов", avatar: UIImage(named: "userPhoto"), photoAlbum: [UIImage(named: "photo5"), UIImage(named: "photo7"), UIImage(named: "photo4"), UIImage(named: "photo3"), UIImage(named: "photo8"), UIImage(named: "photo2"), UIImage(named: "photo1")]),
-    ]
+    var friends = [User]() {
+        didSet {
+            (firstLetters, sortedFriends) = sort(friends)
+        }
+    }
     
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -38,21 +27,25 @@ class FriendsViewController: UITableViewController {
     var firstLetters = [Character]()
     var sortedFriends = [Character: [User]]()
     
-    let sectionTitles = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ".map(String.init)
+    let sectionTitles = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ".map(String.init)
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NetworkService.loadFriends(token: Session.shared.token)
         
+        NetworkService.loadFriends(token: Session.shared.token) { [weak self] friend in
+            self?.friends = friend
+            self?.tableView.reloadData()
+        }
         
         filteredFriends = friends
         
+     
         
         tableView.register(FriendsSectionHeader.self, forHeaderFooterViewReuseIdentifier: "FriendsSectionHeader")
         
-        (firstLetters, sortedFriends) = sort(filteredFriends)
+        (firstLetters, sortedFriends) = sort(friends)
         
     }
 
@@ -87,15 +80,14 @@ class FriendsViewController: UITableViewController {
         
         let firstLetter = firstLetters[indexPath.section]
         if let friends = sortedFriends[firstLetter] {
-            cell.username.text = friends[indexPath.row].firstName + " " + friends[indexPath.row].lastName
-            cell.avatar.image = friends[indexPath.row].avatar
-            cell.avatar.contentMode = .scaleAspectFill
-  
+        
+            cell.configure(with: friends[indexPath.row])
+
         }
-    
+        
             return cell
         
-        }
+    }
     
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -105,9 +97,11 @@ class FriendsViewController: UITableViewController {
         return sectionHeader
     }
     
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return String(firstLetters[section])
     }
+    
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         sectionTitles
@@ -123,7 +117,7 @@ class FriendsViewController: UITableViewController {
         var characters = [Character]()
         var sortedFriends = [Character: [User]]()
         
-        filteredFriends.forEach { friend in
+        friends.forEach { friend in
             guard let character = friend.firstName.first else { return }
             if var thisCharFriends = sortedFriends[character] {
                 thisCharFriends.append(friend)
