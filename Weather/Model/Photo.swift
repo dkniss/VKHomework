@@ -13,8 +13,9 @@ struct Photo: Codable {
     var url: String
     
     init(_ json: JSON) {
+        
         self.id = json["id"].intValue
-        self.url = json["sizes"][0]["url"].stringValue
+        self.url = json["sizes"][4]["url"].stringValue
     
     }
 }

@@ -27,7 +27,7 @@ class FriendsViewController: UITableViewController {
     var firstLetters = [Character]()
     var sortedFriends = [Character: [User]]()
     
-    let sectionTitles = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ".map(String.init)
+    let sectionTitles = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ".map(String.init)
     
     
     override func viewDidLoad() {
