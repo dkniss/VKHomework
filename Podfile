@@ -13,6 +13,8 @@ target 'Weather' do
 
   pod 'Kingfisher', '~> 6.0.1'
 
+  pod 'RealmSwift'
+
   target 'WeatherTests' do
     inherit! :search_paths
     # Pods for testing
