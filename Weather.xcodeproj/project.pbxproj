@@ -64,17 +64,17 @@
 		1B626F3A33C1A08B0C01E115 /* Pods_Weather_WeatherUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Weather_WeatherUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23B5E2287CFD69DFDFBBB33A /* Pods-Weather-WeatherUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather-WeatherUITests.release.xcconfig"; path = "Target Support Files/Pods-Weather-WeatherUITests/Pods-Weather-WeatherUITests.release.xcconfig"; sourceTree = "<group>"; };
 		3C0446E0CA01E705618CAC7A /* Pods-Weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Weather.release.xcconfig"; path = "Target Support Files/Pods-Weather/Pods-Weather.release.xcconfig"; sourceTree = "<group>"; };
-		4D07B30325780EBE00575C70 /* VKApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VKApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D07B30325780EBE00575C70 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D07B30625780EBE00575C70 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D07B30825780EBE00575C70 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4D07B30D25780EBE00575C70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D07B30F25780EBF00575C70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D07B31225780EBF00575C70 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4D07B31425780EBF00575C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D07B31925780EBF00575C70 /* VKAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VKAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D07B31925780EBF00575C70 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D07B31D25780EBF00575C70 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		4D07B31F25780EBF00575C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4D07B32425780EBF00575C70 /* VKAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VKAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D07B32425780EBF00575C70 /* WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D07B32825780EBF00575C70 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		4D07B32A25780EBF00575C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D07B33925780ED200575C70 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
@@ -152,9 +152,9 @@
 		4D07B30425780EBE00575C70 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4D07B30325780EBE00575C70 /* VKApp.app */,
-				4D07B31925780EBF00575C70 /* VKAppTests.xctest */,
-				4D07B32425780EBF00575C70 /* VKAppUITests.xctest */,
+				4D07B30325780EBE00575C70 /* Weather.app */,
+				4D07B31925780EBF00575C70 /* WeatherTests.xctest */,
+				4D07B32425780EBF00575C70 /* WeatherUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -288,9 +288,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		4D07B30225780EBE00575C70 /* VKApp */ = {
+		4D07B30225780EBE00575C70 /* Weather */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D07B32D25780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKApp" */;
+			buildConfigurationList = 4D07B32D25780EBF00575C70 /* Build configuration list for PBXNativeTarget "Weather" */;
 			buildPhases = (
 				E3D1C12587DA3326AC203F0F /* [CP] Check Pods Manifest.lock */,
 				4D07B2FF25780EBE00575C70 /* Sources */,
@@ -302,14 +302,14 @@
 			);
 			dependencies = (
 			);
-			name = VKApp;
+			name = Weather;
 			productName = Weather;
-			productReference = 4D07B30325780EBE00575C70 /* VKApp.app */;
+			productReference = 4D07B30325780EBE00575C70 /* Weather.app */;
 			productType = "com.apple.product-type.application";
 		};
-		4D07B31825780EBF00575C70 /* VKAppTests */ = {
+		4D07B31825780EBF00575C70 /* WeatherTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D07B33025780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKAppTests" */;
+			buildConfigurationList = 4D07B33025780EBF00575C70 /* Build configuration list for PBXNativeTarget "WeatherTests" */;
 			buildPhases = (
 				B605F30D4DEE4BD388CF4D6C /* [CP] Check Pods Manifest.lock */,
 				4D07B31525780EBF00575C70 /* Sources */,
@@ -321,14 +321,14 @@
 			dependencies = (
 				4D07B31B25780EBF00575C70 /* PBXTargetDependency */,
 			);
-			name = VKAppTests;
+			name = WeatherTests;
 			productName = WeatherTests;
-			productReference = 4D07B31925780EBF00575C70 /* VKAppTests.xctest */;
+			productReference = 4D07B31925780EBF00575C70 /* WeatherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		4D07B32325780EBF00575C70 /* VKAppUITests */ = {
+		4D07B32325780EBF00575C70 /* WeatherUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 4D07B33325780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKAppUITests" */;
+			buildConfigurationList = 4D07B33325780EBF00575C70 /* Build configuration list for PBXNativeTarget "WeatherUITests" */;
 			buildPhases = (
 				7E5E55FB28B6FCE0AD887ED4 /* [CP] Check Pods Manifest.lock */,
 				4D07B32025780EBF00575C70 /* Sources */,
@@ -341,9 +341,9 @@
 			dependencies = (
 				4D07B32625780EBF00575C70 /* PBXTargetDependency */,
 			);
-			name = VKAppUITests;
+			name = WeatherUITests;
 			productName = WeatherUITests;
-			productReference = 4D07B32425780EBF00575C70 /* VKAppUITests.xctest */;
+			productReference = 4D07B32425780EBF00575C70 /* WeatherUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -368,7 +368,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4D07B2FE25780EBE00575C70 /* Build configuration list for PBXProject "VKApp" */;
+			buildConfigurationList = 4D07B2FE25780EBE00575C70 /* Build configuration list for PBXProject "Weather" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -381,9 +381,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				4D07B30225780EBE00575C70 /* VKApp */,
-				4D07B31825780EBF00575C70 /* VKAppTests */,
-				4D07B32325780EBF00575C70 /* VKAppUITests */,
+				4D07B30225780EBE00575C70 /* Weather */,
+				4D07B31825780EBF00575C70 /* WeatherTests */,
+				4D07B32325780EBF00575C70 /* WeatherUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -573,12 +573,12 @@
 /* Begin PBXTargetDependency section */
 		4D07B31B25780EBF00575C70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D07B30225780EBE00575C70 /* VKApp */;
+			target = 4D07B30225780EBE00575C70 /* Weather */;
 			targetProxy = 4D07B31A25780EBF00575C70 /* PBXContainerItemProxy */;
 		};
 		4D07B32625780EBF00575C70 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 4D07B30225780EBE00575C70 /* VKApp */;
+			target = 4D07B30225780EBE00575C70 /* Weather */;
 			targetProxy = 4D07B32525780EBF00575C70 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -777,7 +777,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VKApp.app/VKApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Weather.app/Weather";
 			};
 			name = Debug;
 		};
@@ -799,7 +799,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VKApp.app/VKApp";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Weather.app/Weather";
 			};
 			name = Release;
 		};
@@ -846,7 +846,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D07B2FE25780EBE00575C70 /* Build configuration list for PBXProject "VKApp" */ = {
+		4D07B2FE25780EBE00575C70 /* Build configuration list for PBXProject "Weather" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D07B32B25780EBF00575C70 /* Debug */,
@@ -855,7 +855,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D07B32D25780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKApp" */ = {
+		4D07B32D25780EBF00575C70 /* Build configuration list for PBXNativeTarget "Weather" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D07B32E25780EBF00575C70 /* Debug */,
@@ -864,7 +864,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D07B33025780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKAppTests" */ = {
+		4D07B33025780EBF00575C70 /* Build configuration list for PBXNativeTarget "WeatherTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D07B33125780EBF00575C70 /* Debug */,
@@ -873,7 +873,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		4D07B33325780EBF00575C70 /* Build configuration list for PBXNativeTarget "VKAppUITests" */ = {
+		4D07B33325780EBF00575C70 /* Build configuration list for PBXNativeTarget "WeatherUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D07B33425780EBF00575C70 /* Debug */,
