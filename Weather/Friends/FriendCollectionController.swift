@@ -25,6 +25,7 @@ class FriendCollectionController: UICollectionViewController {
         NetworkService.loadPhotos(token: Session.shared.token, ownerId: user!.id) { [weak self] photos in
             self?.photo = photos
             self?.collectionView.reloadData()
+            NetworkService.savePhotosData(photos)
         }
         
     }

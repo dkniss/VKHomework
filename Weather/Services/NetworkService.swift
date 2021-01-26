@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-
+import RealmSwift
 
 class NetworkService {
     
@@ -113,6 +113,38 @@ class NetworkService {
         }
     }
     
- 
+    static func saveFriendsData(_ friends: [User]) {
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(friends)
+            try realm.commitWrite()
+            print(realm.configuration.fileURL!)
+        } catch {
+            print(error)
+        }
+    }
+    
+    static func saveGroupsData(_ groups: [Group]) {
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(groups)
+            try realm.commitWrite()
+        } catch {
+            print(error)
+        }
+    }
+    
+    static func savePhotosData(_ photos: [Photo]) {
+        do {
+            let realm = try Realm()
+            realm.beginWrite()
+            realm.add(photos)
+            try realm.commitWrite()
+        } catch {
+            print(error)
+        }
+    }
     
 }

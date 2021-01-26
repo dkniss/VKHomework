@@ -37,6 +37,7 @@ class FriendsViewController: UITableViewController {
         NetworkService.loadFriends(token: Session.shared.token) { [weak self] friend in
             self?.friends = friend
             self?.tableView.reloadData()
+            NetworkService.saveFriendsData(friend)
         }
         
         filteredFriends = friends

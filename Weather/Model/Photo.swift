@@ -7,13 +7,14 @@
 
 import Foundation
 import SwiftyJSON
+import RealmSwift
 
-struct Photo: Codable {
-    var id: Int
-    var url: String
+class Photo: Object, Codable {
+    @objc dynamic var id: Int = 0
+    @objc dynamic var url: String = ""
     
-    init(_ json: JSON) {
-        
+    convenience required init(_ json: JSON) {
+        self.init()
         self.id = json["id"].intValue
         self.url = json["sizes"][4]["url"].stringValue
     

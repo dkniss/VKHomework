@@ -7,14 +7,17 @@
 
 import SwiftyJSON
 import Foundation
+import RealmSwift
 
-struct Group: Codable {
-    var id: Int
-    var photo: String
-    var name: String 
+class Group: Object, Codable {
+    
+    @objc dynamic var id: Int = 0
+    @objc dynamic var photo: String = ""
+    @objc dynamic var name: String = ""
     
     
-    init(_ json: JSON) {
+    convenience required init(_ json: JSON) {
+        self.init()
         self.id = json["id"].intValue
         self.name = json["name"].stringValue
         self.photo = json["photo_50"].stringValue
@@ -24,11 +27,7 @@ struct Group: Codable {
 }
     
 
-extension Group: Equatable {
-    static func ==(lhs: Group, rhs: Group) -> Bool {
-        return lhs.name == rhs.name && lhs.id == rhs.id
-    }
-}
+
 
 
 

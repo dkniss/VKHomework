@@ -32,7 +32,7 @@ class UserGroupsController: UITableViewController {
                                   userId: Session.shared.userId) { [weak self] groups in
             self?.groups = groups
             self?.tableView.reloadData()
-            
+            NetworkService.saveGroupsData(groups)
         }
         
     
