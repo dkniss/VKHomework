@@ -12,7 +12,7 @@ import RealmSwift
 
 class NetworkService {
     
-    static func loadUserGroups(token: String, userId: Int,  completion: @escaping ([Group]) -> Void) {
+    static func loadUserGroups(token: String, userId: Int, completion: @escaping ([Group]) -> Void) {
         let host = "https://api.vk.com"
         let path = "/method/groups.get"
         
@@ -28,8 +28,8 @@ class NetworkService {
             case .success(let data):
                 let json = JSON(data)
                 let groupsJSON = json["response"]["items"].arrayValue
+                print("GROUPSJSONS: \(groupsJSON)")
                 let groups = groupsJSON.compactMap { Group($0) }
-                groups.forEach { print($0.name) }
                 completion(groups)
             case .failure(let error):
                 print(error)

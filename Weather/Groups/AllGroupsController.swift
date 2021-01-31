@@ -10,7 +10,9 @@ import RealmSwift
 
 class AllGroupsController: UITableViewController {
     
-    lazy var groups = try? Realm().objects(Group.self).sorted(byKeyPath: "id") {
+    private let isMember = 0
+    
+    lazy var groups = try? Realm().objects(Group.self).filter("isMember == %@", String(isMember)).sorted(byKeyPath: "id") {
         didSet {
             tableView.reloadData()
         }

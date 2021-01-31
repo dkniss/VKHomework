@@ -11,7 +11,9 @@ import RealmSwift
 class UserGroupsController: UITableViewController {
     
 //    var groups = [Group]()
-    private lazy var groups = try? Realm().objects(Group.self).sorted(byKeyPath: "id") {
+    private let isMember = 1
+    
+    private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
         didSet {
             tableView.reloadData()
         }
@@ -149,7 +151,6 @@ class UserGroupsController: UITableViewController {
 //        })
 //        tableView.reloadData()
 //    }
-//
 //
 //
 //}
