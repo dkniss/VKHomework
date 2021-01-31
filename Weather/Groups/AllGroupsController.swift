@@ -6,16 +6,21 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AllGroupsController: UITableViewController {
     
-    var groups = [Group]()
+    lazy var groups = try? Realm().objects(Group.self).sorted(byKeyPath: "id") {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NetworkService.loadAllGroups(token: Session.shared.token) { [weak self] groups in
-            self?.groups = groups
+            try? RealmService.save(items: groups)
             self?.tableView.reloadData()
         }
         
@@ -35,15 +40,18 @@ class AllGroupsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return groups.count
+        return groups?.count ?? 0
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
             
         
-            let cell = tableView.dequeueReusableCell(withIdentifier: "AllGroupsCell", for: indexPath) as! AllGroupsCell
+           guard
+                let cell = tableView.dequeueReusableCell(withIdentifier: "AllGroupsCell", for: indexPath) as? AllGroupsCell,
+            let group = groups?[indexPath.row]
+           else { return UITableViewCell() }
             
-        cell.configure(with: groups[indexPath.row])
+            cell.configure(with: group)
 
             return cell
         }

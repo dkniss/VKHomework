@@ -105,7 +105,6 @@ class NetworkService {
                 let photosJSONs = json["response"]["items"].arrayValue
                 print("PHOTOSJSONS: \(photosJSONs)")
                 let photos = photosJSONs.compactMap { Photo($0) }
-                photos.forEach { print($0.id) }
                 completion(photos)
             case .failure(let error):
                 print(error)

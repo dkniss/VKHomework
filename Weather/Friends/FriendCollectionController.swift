@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 
 
@@ -13,7 +14,11 @@ class FriendCollectionController: UICollectionViewController {
     
     var user: User?
     
-    var photo = [Photo]()
+    private lazy var photo = try? Realm().objects(Photo.self).filter("ownerId == %@", String(user?.id ?? 0)).sorted(byKeyPath: "id") {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
     
     var photoId = 0
     
@@ -22,10 +27,11 @@ class FriendCollectionController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NetworkService.loadPhotos(token: Session.shared.token, ownerId: user!.id) { [weak self] photos in
-            self?.photo = photos
+        NetworkService.loadPhotos(token: Session.shared.token, ownerId: user?.id ?? 0  ) { [weak self] photos in
+//            self?.photo = photos
+            try? RealmService.save(items: photos)
             self?.collectionView.reloadData()
-            NetworkService.savePhotosData(photos)
+            
         }
         
     }
@@ -36,15 +42,18 @@ class FriendCollectionController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photo.count
+        return photo?.count ?? 0
      }
     
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as! FriendCell
+         guard
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as? FriendCell,
+            let currentPhoto = photo?[indexPath.row]
+         else { return UICollectionViewCell() }
         
-        cell.configure(with: photo[indexPath.row])
+        cell.configure(with: currentPhoto)
         
         
         
@@ -54,7 +63,7 @@ class FriendCollectionController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let selectedPhoto = photo[indexPath.row]
+        let selectedPhoto = photo?[indexPath.row]
         
         photoId = indexPath.row
         
@@ -69,7 +78,7 @@ class FriendCollectionController: UICollectionViewController {
             
             guard let selectedPhoto = sender as? Photo else { return }
             
-            detailVC.userPhoto = photo
+            detailVC.userPhoto = Array(photo!)
             detailVC.selectedPhoto = selectedPhoto
             detailVC.photoId = photoId
             

@@ -6,10 +6,16 @@
 //
 
 import UIKit
+import RealmSwift
 
 class UserGroupsController: UITableViewController {
     
-    var groups = [Group]()
+//    var groups = [Group]()
+    private lazy var groups = try? Realm().objects(Group.self).sorted(byKeyPath: "id") {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     private var filteredGroups = [Group]()
     
@@ -30,9 +36,8 @@ class UserGroupsController: UITableViewController {
         
         NetworkService.loadUserGroups(token: Session.shared.token,
                                   userId: Session.shared.userId) { [weak self] groups in
-            self?.groups = groups
+            try? RealmService.save(items: groups)
             self?.tableView.reloadData()
-            NetworkService.saveGroupsData(groups)
         }
         
     
@@ -40,11 +45,13 @@ class UserGroupsController: UITableViewController {
         
 //        self.tableView.reloadData()
         
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Поиск по группам"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
+//        searchController.searchResultsUpdater = self
+//        searchController.obscuresBackgroundDuringPresentation = false
+//        searchController.searchBar.placeholder = "Поиск по группам"
+//        navigationItem.searchController = searchController
+//        definesPresentationContext = true
+//        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -64,7 +71,7 @@ class UserGroupsController: UITableViewController {
             return filteredGroups.count
         }
         
-        return groups.count
+        return groups?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -80,12 +87,16 @@ class UserGroupsController: UITableViewController {
     
      override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
          
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as! UserGroupCell
+        guard
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell,
+            let group = groups?[indexPath.row]
+        else { return UITableViewCell() }
+         
         
         if isFiltering {
             cell.configure(with: filteredGroups[indexPath.row])
         } else {
-            cell.configure(with: groups[indexPath.row])
+            cell.configure(with: group)
         }
          
         
@@ -94,51 +105,54 @@ class UserGroupsController: UITableViewController {
          return cell
      }
 
-    @IBAction func addGroup(segue: UIStoryboardSegue) {
-            
-            if segue.identifier == "addGroup" {
-            
-                guard let allGroupsController = segue.source as? AllGroupsController else { return }
-            
-                if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
-          
-                    let group = allGroupsController.groups[indexPath.row]
-         
-                    if !groups.contains(group) {
-                        
-                        groups.append(group)
-    
-                        tableView.reloadData()
-                    }
-                }
-            }
-        }
+//    @IBAction func addGroup(segue: UIStoryboardSegue) {
+//
+//            if segue.identifier == "addGroup" {
+//
+//                guard let allGroupsController = segue.source as? AllGroupsController else { return }
+//
+//                if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
+//
+//                    let group = allGroupsController.groups?[indexPath.row]
+//
+//                    if !((groups?.contains(group))!) {
+//
+//                        groups.append(group)
+//
+//                        tableView.reloadData()
+//                    }
+//                }
+//            }
+//        }
 
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-            
-            if editingStyle == .delete {
-                
-                groups.remove(at: indexPath.row)
-        
-                tableView.deleteRows(at: [indexPath], with: .fade)
-            }
-        }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//
+//            if editingStyle == .delete {
+//
+//                groups.remove(at: indexPath.row)
+//
+//                tableView.deleteRows(at: [indexPath], with: .fade)
+//            }
+//        }
 
 
-}
 
-extension UserGroupsController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-    
-    private func filterContentForSearchText(_ searchText: String) {
-        filteredGroups = groups.filter({ (group: Group) -> Bool in
-            return group.name.lowercased().contains(searchText.lowercased())
-        })
-        tableView.reloadData()
-    }
+//extension UserGroupsController: UISearchResultsUpdating {
+//
+//    func updateSearchResults(for searchController: UISearchController) {
+//        filterContentForSearchText(searchController.searchBar.text!)
+//    }
+//
+//    private func filterContentForSearchText(_ searchText: String) {
+//        filteredGroups = groups?.filter({ (group: Group) -> Bool in
+//            return group.name.lowercased().contains(searchText.lowercased())
+//        })
+//        tableView.reloadData()
+//    }
+//
+//
+//
+//}
     
     
 }

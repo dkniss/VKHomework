@@ -22,6 +22,10 @@ class User: Object, Codable {
         self.lastName = json["last_name"].stringValue
         self.photo = json["photo_50"].stringValue
     }
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
 }
 
 
