@@ -6,20 +6,28 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendsViewController: UITableViewController {
     
-    var friends = [User]() {
+//    var friends = [User]() {
+//        didSet {
+//            (firstLetters, sortedFriends) = sort(friends)
+//        }
+//    }
+    
+    private lazy var friends = try? Realm().objects(User.self).sorted(byKeyPath: "id") {
         didSet {
-            (firstLetters, sortedFriends) = sort(friends)
+            (firstLetters, sortedFriends) = sort(Array(friends!))
+            tableView.reloadData()
         }
     }
     
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var filteredFriends = [User]() {
+    var filteredFriends = try? Realm().objects(User.self).sorted(byKeyPath: "id") {
         didSet {
-            (firstLetters, sortedFriends) = sort(filteredFriends)
+            (firstLetters, sortedFriends) = sort(Array(filteredFriends!))
         }
     }
         
@@ -35,7 +43,8 @@ class FriendsViewController: UITableViewController {
         
         
         NetworkService.loadFriends(token: Session.shared.token) { [weak self] friend in
-            self?.friends = friend
+//            self?.friends = friend
+            try? RealmService.save(items: friend)
             self?.tableView.reloadData()
         }
         
@@ -45,7 +54,7 @@ class FriendsViewController: UITableViewController {
         
         tableView.register(FriendsSectionHeader.self, forHeaderFooterViewReuseIdentifier: "FriendsSectionHeader")
         
-        (firstLetters, sortedFriends) = sort(friends)
+        (firstLetters, sortedFriends) = sort(Array(friends!))
         
     }
 
@@ -165,16 +174,18 @@ extension FriendsViewController: UISearchBarDelegate {
        
     }
     
-    fileprivate func filteredFriends(with text: String) {
+    fileprivate func filteredFriends(with searchText: String) {
         
+        let predicate: NSPredicate = NSPredicate(format: "SELF.firstName contains[cd] %@", searchText)
+        filteredFriends = friends?.filter(predicate)
         
-        if text.isEmpty {
+        if searchText.isEmpty {
             filteredFriends = friends
             tableView.reloadData()
             return
         }
   
-        filteredFriends = friends.filter { $0.firstName.lowercased().contains(text.lowercased())}
+//        filteredFriends = friends?.filter { $0.firstName.lowercased().contains(text.lowercased())}
         
         tableView.reloadData()
     }

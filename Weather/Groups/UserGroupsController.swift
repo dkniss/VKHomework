@@ -11,6 +11,9 @@ import RealmSwift
 class UserGroupsController: UITableViewController {
     
 //    var groups = [Group]()
+    
+    
+    
     private let isMember = 1
     
     private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
@@ -18,8 +21,14 @@ class UserGroupsController: UITableViewController {
             tableView.reloadData()
         }
     }
+    
+    var searchResults = try? Realm().objects(Group.self)
 
-    private var filteredGroups = [Group]()
+    private lazy var filteredGroups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -27,7 +36,7 @@ class UserGroupsController: UITableViewController {
         guard let text = searchController.searchBar.text else { return false }
         return text.isEmpty
     }
-    
+
     private var isFiltering: Bool {
         return searchController.isActive && !searchBarIsEmpty
     }
@@ -43,16 +52,16 @@ class UserGroupsController: UITableViewController {
         }
         
     
-
-        
+//
+//
 //        self.tableView.reloadData()
         
-//        searchController.searchResultsUpdater = self
-//        searchController.obscuresBackgroundDuringPresentation = false
-//        searchController.searchBar.placeholder = "Поиск по группам"
-//        navigationItem.searchController = searchController
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Поиск по группам"
+        navigationItem.searchController = searchController
 //        definesPresentationContext = true
-//        
+
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -70,14 +79,14 @@ class UserGroupsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering {
-            return filteredGroups.count
+            return filteredGroups?.count ?? 0
         }
         
         return groups?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
-       
+        
         UIImageView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.2, initialSpringVelocity: 0.25, options: []) {
             let cell = tableView.cellForRow(at: indexPath) as? UserGroupCell
             
@@ -87,25 +96,23 @@ class UserGroupsController: UITableViewController {
         
     }
     
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell,
-            let group = groups?[indexPath.row]
+            let group = searchController.isActive ? searchResults?[indexPath.row] : groups?[indexPath.row]
+            
         else { return UITableViewCell() }
-         
         
-        if isFiltering {
-            cell.configure(with: filteredGroups[indexPath.row])
-        } else {
+       
             cell.configure(with: group)
-        }
-         
         
         
         
-         return cell
-     }
+        
+        
+        return cell
+    }
 
 //    @IBAction func addGroup(segue: UIStoryboardSegue) {
 //
@@ -117,9 +124,18 @@ class UserGroupsController: UITableViewController {
 //
 //                    let group = allGroupsController.groups?[indexPath.row]
 //
-//                    if !((groups?.contains(group))!) {
+//                    if ((group?.isMember = String(0)) != nil) {
 //
-//                        groups.append(group)
+//                        group?.isMember = String(1)
+//
+//                        do {
+//                            let realm = try Realm()
+//                            realm.beginWrite()
+//                            realm.add(group ?? Group(), update: .modified)
+//                            try realm.commitWrite()
+//                        } catch {
+//                            print(error)
+//                        }
 //
 //                        tableView.reloadData()
 //                    }
@@ -137,23 +153,27 @@ class UserGroupsController: UITableViewController {
 //            }
 //        }
 
+}
 
-
-//extension UserGroupsController: UISearchResultsUpdating {
-//
-//    func updateSearchResults(for searchController: UISearchController) {
-//        filterContentForSearchText(searchController.searchBar.text!)
-//    }
-//
-//    private func filterContentForSearchText(_ searchText: String) {
-//        filteredGroups = groups?.filter({ (group: Group) -> Bool in
-//            return group.name.lowercased().contains(searchText.lowercased())
-//        })
-//        tableView.reloadData()
-//    }
-//
-//
-//}
+extension UserGroupsController: UISearchResultsUpdating {
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text
+        filterContentForSearchText(searchText ?? "")
+    }
+    
+    private func filterContentForSearchText(_ searchText: String) {
+        let predicate = NSPredicate(format: "name BEGINSWITH [c]%@", searchText)
+        let realm = try? Realm()
+        
+        searchResults = realm?.objects(Group.self).filter(predicate).sorted(byKeyPath: "name", ascending: true)
+        
+        
+        tableView.reloadData()
+    }
     
     
 }
+    
+    
+
