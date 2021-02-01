@@ -37,6 +37,10 @@ class UserGroupsController: UITableViewController {
         return searchController.isActive && !searchBarIsEmpty
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,23 +51,15 @@ class UserGroupsController: UITableViewController {
             self?.tableView.reloadData()
         }
         
-    
-//
-//
-//        self.tableView.reloadData()
+
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Поиск по группам"
         navigationItem.searchController = searchController
-//        definesPresentationContext = true
+        definesPresentationContext = true
 
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+       
     }
 
     // MARK: - Table view data source
@@ -74,11 +70,8 @@ class UserGroupsController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isFiltering {
-            return filteredGroups?.count ?? 0
-        }
         
-        return groups?.count ?? 0
+        return filteredGroups?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -103,51 +96,55 @@ class UserGroupsController: UITableViewController {
        
             cell.configure(with: group)
         
-        
-        
-        
-        
         return cell
     }
 
-//    @IBAction func addGroup(segue: UIStoryboardSegue) {
-//
-//            if segue.identifier == "addGroup" {
-//
-//                guard let allGroupsController = segue.source as? AllGroupsController else { return }
-//
-//                if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
-//
-//                    let group = allGroupsController.groups?[indexPath.row]
-//
-//                    if ((group?.isMember = String(0)) != nil) {
-//
-//                        group?.isMember = String(1)
-//
-//                        do {
-//                            let realm = try Realm()
-//                            realm.beginWrite()
-//                            realm.add(group ?? Group(), update: .modified)
-//                            try realm.commitWrite()
-//                        } catch {
-//                            print(error)
-//                        }
-//
-//                        tableView.reloadData()
-//                    }
-//                }
-//            }
-//        }
+    @IBAction func addGroup(segue: UIStoryboardSegue) {
 
-//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//
-//            if editingStyle == .delete {
-//
-//                groups.remove(at: indexPath.row)
-//
-//                tableView.deleteRows(at: [indexPath], with: .fade)
-//            }
-//        }
+            if segue.identifier == "addGroup" {
+
+                guard let allGroupsController = segue.source as? AllGroupsController else { return }
+
+                if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
+
+                    let group = allGroupsController.groups?[indexPath.row]
+                    
+                    NetworkService.joinGroup(token: Session.shared.token, groupId: group?.id ?? 0)
+                    
+                    let realm = try? Realm()
+                    
+                    if let group = groups?[indexPath.row] {
+                        try? realm?.write {
+                            realm?.add(group)
+                        }
+                    }
+                    
+                        tableView.reloadData()
+                    }
+                }
+            }
+        
+
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+
+            if editingStyle == .delete {
+                
+                
+                NetworkService.leaveGroup(token: Session.shared.token, groupId: groups?[indexPath.row].id ?? 0)
+                
+                let realm = try? Realm()
+                
+                if let group = groups?[indexPath.row] {
+                    try? realm?.write {
+                        realm?.delete(group)
+                    }
+                }
+
+                tableView.deleteRows(at: [indexPath], with: .fade)
+                
+                tableView.reloadData()
+            }
+        }
 
 }
 

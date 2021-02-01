@@ -146,4 +146,34 @@ class NetworkService {
         }
     }
     
+    static func joinGroup(token: String, groupId: Int) {
+        let host = "https://api.vk.com"
+        let path = "/method/groups.join"
+        
+        let params: Parameters = [
+            "access_token": token,
+            "group_id": groupId,
+            "v": "5.126"
+        ]
+        
+        AF.request(host + path, method: .post, parameters: params).responseData { response in
+            print(response)
+        }
+    }
+    
+    static func leaveGroup(token: String, groupId: Int) {
+        let host = "https://api.vk.com"
+        let path = "/method/groups.leave"
+        
+        let params: Parameters = [
+            "access_token": token,
+            "group_id": groupId,
+            "v": "5.126"
+        ]
+        
+        AF.request(host + path, method: .post, parameters: params).responseJSON { response in
+            print(response)
+        }
+    }
+    
 }
