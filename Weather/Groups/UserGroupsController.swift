@@ -22,13 +22,9 @@ class UserGroupsController: UITableViewController {
         }
     }
     
-    var searchResults = try? Realm().objects(Group.self)
+//    var searchResults = try? Realm().objects(Group.self)
 
-    private lazy var filteredGroups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    private lazy var filteredGroups = groups
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -100,7 +96,7 @@ class UserGroupsController: UITableViewController {
         
         guard
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell,
-            let group = searchController.isActive ? searchResults?[indexPath.row] : groups?[indexPath.row]
+            let group = filteredGroups?[indexPath.row]
             
         else { return UITableViewCell() }
         
@@ -163,11 +159,15 @@ extension UserGroupsController: UISearchResultsUpdating {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        let predicate = NSPredicate(format: "name BEGINSWITH [c]%@", searchText)
-        let realm = try? Realm()
+        let predicate = NSPredicate(format: "name contains[cd] %@", searchText)
         
-        searchResults = realm?.objects(Group.self).filter(predicate).sorted(byKeyPath: "name", ascending: true)
+        if searchText.isEmpty {
+            filteredGroups = groups
+            tableView.reloadData()
+            return
+        }
         
+        filteredGroups = groups?.filter(predicate)
         
         tableView.reloadData()
     }
