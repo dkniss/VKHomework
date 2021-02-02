@@ -35,8 +35,6 @@ class FriendsViewController: UITableViewController {
     var firstLetters = [Character]()
     var sortedFriends = [Character: [User]]()
     
-    let sectionTitles = "ABCDEFGHIJKLMNOPQRSTUVWXYZАБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЬЫЪЭЮЯ".map(String.init)
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -113,7 +111,8 @@ class FriendsViewController: UITableViewController {
     
     
     override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
-        sectionTitles
+        let sectionTitles = String(firstLetters).map{ String($0) }
+        return sectionTitles
     }
         
     override func tableView(_ tableView: UITableView,
@@ -160,9 +159,6 @@ class FriendsViewController: UITableViewController {
         }
 
     }
-
-    
-    
     
 }
 
