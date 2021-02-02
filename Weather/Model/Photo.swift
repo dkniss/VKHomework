@@ -18,9 +18,13 @@ class Photo: Object, Codable {
     convenience required init(_ json: JSON) {
         self.init()
         self.id = json["id"].intValue
-        self.url = json["sizes"][4]["url"].stringValue
-        self.ownerId = String(json["owner_id"].intValue)
-    
+        self.ownerId = json["owner_id"].stringValue
+        let sizes = json["sizes"].arrayValue
+        if let zSize = sizes.filter({$0["type"] == "z"}).first {
+            self.url = zSize["url"].stringValue
+        } else {
+            self.url = sizes[0]["url"].stringValue
+        }
     }
     
     override class func primaryKey() -> String? {

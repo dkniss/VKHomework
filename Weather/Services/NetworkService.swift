@@ -106,6 +106,7 @@ class NetworkService {
                 print("PHOTOSJSONS: \(photosJSONs)")
                 let photos = photosJSONs.compactMap { Photo($0) }
                 completion(photos)
+                print(photos)
             case .failure(let error):
                 print(error)
             }
