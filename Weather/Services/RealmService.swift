@@ -21,4 +21,12 @@ class RealmService {
         }
     }
     
+    static func get <T: Object>(_ type: T.Type,configuration: Realm.Configuration = deleteIfMigration) throws -> Results<T> {
+        print(configuration.fileURL ?? "")
+        let realm = try Realm(configuration: configuration)
+        return realm.objects(type)
+    }
+    
+    
+    
 }
