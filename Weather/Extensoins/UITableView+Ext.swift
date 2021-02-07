@@ -16,10 +16,10 @@ extension UITableView {
         deleteRows(at: deletions.compactMap { IndexPath(row: $0,
                                                         section: sections) },
                    with: .automatic)
-        insertRows(at: deletions.compactMap { IndexPath(row: $0,
+        insertRows(at: insertion.compactMap { IndexPath(row: $0,
                                                         section: sections) },
                    with: .automatic)
-        reloadRows(at: deletions.compactMap { IndexPath(row: $0,
+        reloadRows(at: modifications.compactMap { IndexPath(row: $0,
                                                         section: sections) },
                    with: .automatic)
         endUpdates()

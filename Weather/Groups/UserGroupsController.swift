@@ -14,11 +14,7 @@ class UserGroupsController: UITableViewController {
     
     fileprivate var notificationToken: NotificationToken?
     
-    private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    private var groups: Results<Group>?
 
     private lazy var filteredGroups = groups
     
@@ -35,7 +31,9 @@ class UserGroupsController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        notificationToken = filteredGroups?.observe { change in
+        
+        notificationToken = filteredGroups?.observe { [weak self] change in
+            guard let self = self else { return }
             switch change {
             case .initial:
                 print("CASE INITIAL")
@@ -49,10 +47,12 @@ class UserGroupsController: UITableViewController {
                 print(error)
             }
         }
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         
         NetworkService.loadUserGroups(token: Session.shared.token,
@@ -61,7 +61,8 @@ class UserGroupsController: UITableViewController {
             self?.tableView.reloadData()
         }
         
-
+        groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id")
+        
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -69,6 +70,7 @@ class UserGroupsController: UITableViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
+     
        
     }
 
@@ -126,6 +128,7 @@ class UserGroupsController: UITableViewController {
                     
                     NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
                     
+                    
                     do {
                         let realm = try Realm()
                         try realm.write{
@@ -135,7 +138,6 @@ class UserGroupsController: UITableViewController {
                     } catch {
                         print(error)
                     }
-                        tableView.reloadData()
                     }
                 }
             }
@@ -152,15 +154,15 @@ class UserGroupsController: UITableViewController {
                 do {
                     let realm = try Realm()
                     realm.beginWrite()
-                    group.isMember = "0"
                     realm.delete(group)
                     try realm.commitWrite()
                 } catch {
                     print(error)
                 }
-
+  
                 tableView.deleteRows(at: [indexPath], with: .fade)
             }
+        
         }
 
 }

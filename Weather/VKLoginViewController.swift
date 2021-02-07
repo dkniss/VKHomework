@@ -24,12 +24,13 @@ class VKLoginViewController: UIViewController{
                 urlComponents.host = "oauth.vk.com"
                 urlComponents.path = "/authorize"
                 urlComponents.queryItems = [
-                    URLQueryItem(name: "client_id", value: "7730247"),
+                    URLQueryItem(name: "client_id", value: "7753980"),
                     URLQueryItem(name: "display", value: "mobile"),
                     URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-                    URLQueryItem(name: "scope", value: "336918"),
+                    URLQueryItem(name: "scope", value: "2048523"),
                     URLQueryItem(name: "response_type", value: "token"),
-                    URLQueryItem(name: "v", value: "5.68")
+                    URLQueryItem(name: "v", value: "5.126"),
+                    URLQueryItem(name: "state", value: "12346542")
                 ]
                 
                 let request = URLRequest(url: urlComponents.url!)
@@ -71,7 +72,7 @@ extension VKLoginViewController: WKNavigationDelegate {
        }
         
         Session.shared.token = token
-        
+ 
         Session.shared.userId = userId
         
         print("Token: \(token) ")

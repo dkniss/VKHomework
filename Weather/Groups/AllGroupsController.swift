@@ -12,11 +12,10 @@ class AllGroupsController: UITableViewController {
     
     private let isMember = 0
     
-    lazy var groups = try? Realm().objects(Group.self).filter("isMember == %@", String(isMember)).sorted(byKeyPath: "id") {
-        didSet {
-            tableView.reloadData()
-        }
-    }
+    lazy var groups = try? RealmService.get(Group.self).filter("isMember == %@", String(isMember)).sorted(byKeyPath: "id")
+
+    private var notificationToken: NotificationToken?
+
 
     override func viewDidLoad() {
         super.viewDidLoad()

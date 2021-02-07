@@ -157,7 +157,7 @@ class NetworkService {
             "v": "5.126"
         ]
         
-        AF.request(host + path, method: .post, parameters: params).responseData { response in
+        AF.request(host + path, method: .post, parameters: params).responseJSON { response in
             print(response)
         }
     }
