@@ -10,19 +10,15 @@ import RealmSwift
 
 class UserGroupsController: UITableViewController {
     
-//    var groups = [Group]()
-    
-    
-    
     private let isMember = 1
+    
+    fileprivate var notificationToken: NotificationToken?
     
     private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id") {
         didSet {
             tableView.reloadData()
         }
     }
-    
-//    var searchResults = try? Realm().objects(Group.self)
 
     private lazy var filteredGroups = groups
     
@@ -38,7 +34,21 @@ class UserGroupsController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        tableView.reloadData()
+        super.viewWillAppear(animated)
+        notificationToken = filteredGroups?.observe { change in
+            switch change {
+            case .initial:
+                print("CASE INITIAL")
+                self.tableView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                self.tableView.update(deletions: deletions, insertion: insertions, modifications: modifications)
+                print(deletions)
+                print(insertions)
+                print(modifications)
+            case .error(let error):
+                print(error)
+            }
+        }
     }
     
     override func viewDidLoad() {
@@ -62,6 +72,11 @@ class UserGroupsController: UITableViewController {
        
     }
 
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        notificationToken?.invalidate()
+    }
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -107,18 +122,19 @@ class UserGroupsController: UITableViewController {
 
                 if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
 
-                    let group = allGroupsController.groups?[indexPath.row]
+                    guard let group = allGroupsController.groups?[indexPath.row] else { return }
                     
-                    NetworkService.joinGroup(token: Session.shared.token, groupId: group?.id ?? 0)
+                    NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
                     
-                    let realm = try? Realm()
-                    
-                    if let group = groups?[indexPath.row] {
-                        try? realm?.write {
-                            realm?.add(group)
+                    do {
+                        let realm = try Realm()
+                        try realm.write{
+                            group.isMember = "1"
+                            realm.add(group, update: .modified)
                         }
+                    } catch {
+                        print(error)
                     }
-                    
                         tableView.reloadData()
                     }
                 }
@@ -129,20 +145,21 @@ class UserGroupsController: UITableViewController {
 
             if editingStyle == .delete {
                 
-                
-                NetworkService.leaveGroup(token: Session.shared.token, groupId: groups?[indexPath.row].id ?? 0)
-                
-                let realm = try? Realm()
-                
-                if let group = groups?[indexPath.row] {
-                    try? realm?.write {
-                        realm?.delete(group)
-                    }
+                guard let group = filteredGroups?[indexPath.row] else { return }
+
+                NetworkService.leaveGroup(token: Session.shared.token, groupId: group.id)
+
+                do {
+                    let realm = try Realm()
+                    realm.beginWrite()
+                    group.isMember = "0"
+                    realm.delete(group)
+                    try realm.commitWrite()
+                } catch {
+                    print(error)
                 }
 
                 tableView.deleteRows(at: [indexPath], with: .fade)
-                
-                tableView.reloadData()
             }
         }
 
