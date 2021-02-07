@@ -10,43 +10,57 @@ import RealmSwift
 
 class FriendsViewController: UITableViewController {
     
-//    var friends = [User]() {
-//        didSet {
-//            (firstLetters, sortedFriends) = sort(friends)
-//        }
-//    }
-    
     private lazy var friends = try? Realm().objects(User.self).sorted(byKeyPath: "id") {
         didSet {
             (firstLetters, sortedFriends) = sort(Array(friends!))
-            tableView.reloadData()
         }
     }
-    
-    @IBOutlet weak var searchBar: UISearchBar!
-    
     var filteredFriends = try? Realm().objects(User.self).sorted(byKeyPath: "id") {
         didSet {
             (firstLetters, sortedFriends) = sort(Array(filteredFriends!))
         }
     }
-        
+    
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    private var notificationToken: NotificationToken?
     
     var firstLetters = [Character]()
     var sortedFriends = [Character: [User]]()
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        notificationToken = friends?.observe { [weak self] change in
+            guard let self = self else { return }
+            switch change {
+            case .initial:
+                self.tableView.reloadData()
+            
+            case let .update(_, deletions, insertions, modifications):
+                self.tableView.update(deletions: deletions, insertions: insertions, modifications: modifications,sections: self.firstLetters.count)
+                print(deletions)
+                print(insertions)
+                print(modifications)
+            case .error(let error):
+                print(error)
+            }
+        }
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
         NetworkService.loadFriends(token: Session.shared.token) { [weak self] friend in
-//            self?.friends = friend
             try? RealmService.save(items: friend)
             self?.tableView.reloadData()
         }
         
-        filteredFriends = friends
         
      
         

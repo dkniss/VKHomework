@@ -14,7 +14,7 @@ class UserGroupsController: UITableViewController {
     
     fileprivate var notificationToken: NotificationToken?
     
-    private var groups: Results<Group>?
+    private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id")
 
     private lazy var filteredGroups = groups
     
@@ -39,7 +39,7 @@ class UserGroupsController: UITableViewController {
                 print("CASE INITIAL")
                 self.tableView.reloadData()
             case let .update(_, deletions, insertions, modifications):
-                self.tableView.update(deletions: deletions, insertion: insertions, modifications: modifications)
+                self.tableView.update(deletions: deletions, insertions: insertions, modifications: modifications)
                 print(deletions)
                 print(insertions)
                 print(modifications)
@@ -48,6 +48,10 @@ class UserGroupsController: UITableViewController {
             }
         }
         
+    }
+    
+    deinit {
+        notificationToken?.invalidate()
     }
     
     override func viewDidLoad() {
@@ -61,7 +65,7 @@ class UserGroupsController: UITableViewController {
             self?.tableView.reloadData()
         }
         
-        groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id")
+     
         
         
         searchController.searchResultsUpdater = self
@@ -74,11 +78,7 @@ class UserGroupsController: UITableViewController {
        
     }
 
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        notificationToken?.invalidate()
-    }
+
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -117,31 +117,31 @@ class UserGroupsController: UITableViewController {
     }
 
     @IBAction func addGroup(segue: UIStoryboardSegue) {
-
-            if segue.identifier == "addGroup" {
-
-                guard let allGroupsController = segue.source as? AllGroupsController else { return }
-
-                if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
-
-                    guard let group = allGroupsController.groups?[indexPath.row] else { return }
-                    
-                    NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
-                    
-                    
-                    do {
-                        let realm = try Realm()
-                        try realm.write{
-                            group.isMember = "1"
-                            realm.add(group, update: .modified)
-                        }
-                    } catch {
-                        print(error)
+        
+        if segue.identifier == "addGroup" {
+            
+            guard let allGroupsController = segue.source as? AllGroupsController else { return }
+            
+            if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
+                
+                guard let group = allGroupsController.groups?[indexPath.row] else { return }
+                
+                NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
+                
+                
+                do {
+                    let realm = try Realm()
+                    try realm.write{
+                        group.isMember = "1"
+                        realm.add(group, update: .modified)
                     }
-                    }
+                } catch {
+                    print(error)
                 }
             }
-        
+        }
+    }
+    
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
 
@@ -154,13 +154,13 @@ class UserGroupsController: UITableViewController {
                 do {
                     let realm = try Realm()
                     realm.beginWrite()
-                    realm.delete(group)
+                    group.isMember = "0"
+                    realm.add(group, update: .modified)
                     try realm.commitWrite()
                 } catch {
                     print(error)
                 }
   
-                tableView.deleteRows(at: [indexPath], with: .fade)
             }
         
         }

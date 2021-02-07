@@ -14,24 +14,43 @@ class FriendCollectionController: UICollectionViewController {
     
     var user: User?
     
-    private lazy var photo = try? Realm().objects(Photo.self).filter("ownerId == %@", String(user?.id ?? 0)).sorted(byKeyPath: "id") {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    private lazy var photo = try? Realm().objects(Photo.self).filter("ownerId == %@", String(user?.id ?? 0)).sorted(byKeyPath: "id")
+    
+    private var notificationToken: NotificationToken?
     
     var photoId = 0
     
-    var friend = [User]()
+//
+//    var friend = [User]()
+//
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        notificationToken = photo?.observe { [weak self] change in
+            guard let self = self else { return }
+            switch change {
+            case .initial:
+                self.collectionView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                self.collectionView.update(deletions: deletions,
+                                           insertions: insertions,
+                                           modifications: modifications)
+            case .error(let error):
+                print(error)
+                
+            }
+        }
+    }
     
+    deinit {
+        notificationToken?.invalidate()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         NetworkService.loadPhotos(token: Session.shared.token, ownerId: user?.id ?? 0  ) { [weak self] photos in
-//            self?.photo = photos
             try? RealmService.save(items: photos)
             self?.collectionView.reloadData()
-            
         }
         
     }

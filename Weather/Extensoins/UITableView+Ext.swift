@@ -9,14 +9,14 @@ import UIKit
 
 extension UITableView {
     func update(deletions: [Int],
-                insertion: [Int],
+                insertions: [Int],
                 modifications: [Int],
                 sections: Int = 0) {
         beginUpdates()
         deleteRows(at: deletions.compactMap { IndexPath(row: $0,
                                                         section: sections) },
                    with: .automatic)
-        insertRows(at: insertion.compactMap { IndexPath(row: $0,
+        insertRows(at: insertions.compactMap { IndexPath(row: $0,
                                                         section: sections) },
                    with: .automatic)
         reloadRows(at: modifications.compactMap { IndexPath(row: $0,
