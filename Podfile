@@ -15,6 +15,11 @@ target 'Weather' do
 
   pod 'RealmSwift'
 
+  pod 'Firebase/Core'
+  pod 'Firebase/Database'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
+
   target 'WeatherTests' do
     inherit! :search_paths
     # Pods for testing

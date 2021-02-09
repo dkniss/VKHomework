@@ -32,6 +32,7 @@
 		4D5CA2A625B31B5E0088D9C5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */; };
 		4D86374325CC66ED00662B20 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D86374225CC66ED00662B20 /* UITableView+Ext.swift */; };
 		4D8BC39425AF64B2002F4098 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8BC39325AF64B2002F4098 /* Session.swift */; };
+		4DA9DFED25D2D0FD0049F8CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DA9DFEC25D2D0FD0049F8CA /* GoogleService-Info.plist */; };
 		4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93B325890CC9007FEDFF /* Graphics.swift */; };
 		4DAF93D1258A6F12007FEDFF /* FriendCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93D0258A6F12007FEDFF /* FriendCollectionController.swift */; };
 		4DAF93D9258E0018007FEDFF /* FriendsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93D8258E0018007FEDFF /* FriendsSectionHeader.swift */; };
@@ -96,6 +97,7 @@
 		4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		4D86374225CC66ED00662B20 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		4D8BC39325AF64B2002F4098 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		4DA9DFEC25D2D0FD0049F8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4DAF93B325890CC9007FEDFF /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
 		4DAF93D0258A6F12007FEDFF /* FriendCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionController.swift; sourceTree = "<group>"; };
 		4DAF93D8258E0018007FEDFF /* FriendsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsSectionHeader.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				4D07B30C25780EBE00575C70 /* Main.storyboard */,
 				4D07B30F25780EBF00575C70 /* Assets.xcassets */,
 				4D07B31125780EBF00575C70 /* LaunchScreen.storyboard */,
+				4DA9DFEC25D2D0FD0049F8CA /* GoogleService-Info.plist */,
 				4D07B31425780EBF00575C70 /* Info.plist */,
 				4D07B33925780ED200575C70 /* VKLoginViewController.swift */,
 				4DAF93B325890CC9007FEDFF /* Graphics.swift */,
@@ -412,6 +415,7 @@
 			files = (
 				4D07B31325780EBF00575C70 /* LaunchScreen.storyboard in Resources */,
 				4D07B31025780EBF00575C70 /* Assets.xcassets in Resources */,
+				4DA9DFED25D2D0FD0049F8CA /* GoogleService-Info.plist in Resources */,
 				4DAF942A25938FA7007FEDFF /* NewsCell.xib in Resources */,
 				4D07B30E25780EBE00575C70 /* Main.storyboard in Resources */,
 			);
