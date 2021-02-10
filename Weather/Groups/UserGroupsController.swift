@@ -21,7 +21,7 @@ class UserGroupsController: UITableViewController {
 //
     
     private var groups = [FirebaseGroup]()
-    private let ref = Database.database(url: "https://vkapp-746cc-default-rtdb.europe-west1.firebasedatabase.app/") .reference(withPath: "Groups of User: \(Session.shared.userId)")
+    private let ref = Database.database(url: "https://vkapp-746cc-default-rtdb.europe-west1.firebasedatabase.app/") .reference(withPath: "Users/User with ID: \(Session.shared.userId)/Added Groups")
     
     
     private let searchController = UISearchController(searchResultsController: nil)

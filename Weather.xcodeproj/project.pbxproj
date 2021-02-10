@@ -17,6 +17,7 @@
 		4D07B31E25780EBF00575C70 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B31D25780EBF00575C70 /* WeatherTests.swift */; };
 		4D07B32925780EBF00575C70 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B32825780EBF00575C70 /* WeatherUITests.swift */; };
 		4D07B33A25780ED200575C70 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B33925780ED200575C70 /* VKLoginViewController.swift */; };
+		4D0C3CCC25D3B90600169513 /* FirebaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D0C3CCB25D3B90600169513 /* FirebaseUser.swift */; };
 		4D1B311E2581484800D1C5DC /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B311D2581484800D1C5DC /* FriendsViewController.swift */; };
 		4D1B31232581485E00D1C5DC /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B31222581485E00D1C5DC /* FriendsCell.swift */; };
 		4D1B314F2582588C00D1C5DC /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B314E2582588C00D1C5DC /* FriendCell.swift */; };
@@ -83,6 +84,7 @@
 		4D07B32825780EBF00575C70 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		4D07B32A25780EBF00575C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D07B33925780ED200575C70 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
+		4D0C3CCB25D3B90600169513 /* FirebaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseUser.swift; sourceTree = "<group>"; };
 		4D1B311D2581484800D1C5DC /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		4D1B31222581485E00D1C5DC /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		4D1B314E2582588C00D1C5DC /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				4DAF93F5258E38A4007FEDFF /* News.swift */,
 				4D285C7825B9DB1200547F55 /* Photo.swift */,
 				4DA9E02C25D2E6990049F8CA /* FirebaseGroup.swift */,
+				4D0C3CCB25D3B90600169513 /* FirebaseUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				4DAF93D9258E0018007FEDFF /* FriendsSectionHeader.swift in Sources */,
 				4D1B317125826BE800D1C5DC /* User.swift in Sources */,
 				4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */,
+				4D0C3CCC25D3B90600169513 /* FirebaseUser.swift in Sources */,
 				4DA9E02D25D2E6990049F8CA /* FirebaseGroup.swift in Sources */,
 				4DAF93D1258A6F12007FEDFF /* FriendCollectionController.swift in Sources */,
 				4D86374325CC66ED00662B20 /* UITableView+Ext.swift in Sources */,

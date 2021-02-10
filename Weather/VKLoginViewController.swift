@@ -8,6 +8,7 @@
 import UIKit
 import WebKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class VKLoginViewController: UIViewController{
     
@@ -16,10 +17,31 @@ class VKLoginViewController: UIViewController{
             webView.navigationDelegate = self
         }
     }
-    
+  
+    var users = [FirebaseUser]()
+    private let ref = Database.database(url: "https://vkapp-746cc-default-rtdb.europe-west1.firebasedatabase.app/") .reference(withPath: "Users")
+  
+ 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+              ref.observe(.value, with: { snapshot in
+                  var users: [FirebaseUser] = []
+                  
+                  for child in snapshot.children {
+                      if let snapshot = child as? DataSnapshot,
+                         let user = FirebaseUser(snapshot: snapshot) {
+                          users.append(user)
+                      }
+                  }
+                  self.users = users
+              })
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
         var urlComponents = URLComponents()
                 urlComponents.scheme = "https"
                 urlComponents.host = "oauth.vk.com"
@@ -40,6 +62,7 @@ class VKLoginViewController: UIViewController{
         
         
     }
+    
     
 }
 
@@ -86,6 +109,11 @@ extension VKLoginViewController: WKNavigationDelegate {
             print(authResult as Any, error as Any)
             
         }
+        
+        let user = FirebaseUser(userId: Session.shared.userId)
+        let userRef = self.ref.child("User with ID: \(Session.shared.userId)")
+      
+        userRef.setValue(user.toAnyObject())
         
         decisionHandler(.cancel)
     }
