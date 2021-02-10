@@ -33,6 +33,7 @@
 		4D86374325CC66ED00662B20 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D86374225CC66ED00662B20 /* UITableView+Ext.swift */; };
 		4D8BC39425AF64B2002F4098 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8BC39325AF64B2002F4098 /* Session.swift */; };
 		4DA9DFED25D2D0FD0049F8CA /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4DA9DFEC25D2D0FD0049F8CA /* GoogleService-Info.plist */; };
+		4DA9E02D25D2E6990049F8CA /* FirebaseGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA9E02C25D2E6990049F8CA /* FirebaseGroup.swift */; };
 		4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93B325890CC9007FEDFF /* Graphics.swift */; };
 		4DAF93D1258A6F12007FEDFF /* FriendCollectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93D0258A6F12007FEDFF /* FriendCollectionController.swift */; };
 		4DAF93D9258E0018007FEDFF /* FriendsSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DAF93D8258E0018007FEDFF /* FriendsSectionHeader.swift */; };
@@ -98,6 +99,7 @@
 		4D86374225CC66ED00662B20 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
 		4D8BC39325AF64B2002F4098 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		4DA9DFEC25D2D0FD0049F8CA /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		4DA9E02C25D2E6990049F8CA /* FirebaseGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseGroup.swift; sourceTree = "<group>"; };
 		4DAF93B325890CC9007FEDFF /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
 		4DAF93D0258A6F12007FEDFF /* FriendCollectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionController.swift; sourceTree = "<group>"; };
 		4DAF93D8258E0018007FEDFF /* FriendsSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsSectionHeader.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 				4D1B317D25826CE900D1C5DC /* Group.swift */,
 				4DAF93F5258E38A4007FEDFF /* News.swift */,
 				4D285C7825B9DB1200547F55 /* Photo.swift */,
+				4DA9E02C25D2E6990049F8CA /* FirebaseGroup.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 				4DAF93D9258E0018007FEDFF /* FriendsSectionHeader.swift in Sources */,
 				4D1B317125826BE800D1C5DC /* User.swift in Sources */,
 				4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */,
+				4DA9E02D25D2E6990049F8CA /* FirebaseGroup.swift in Sources */,
 				4DAF93D1258A6F12007FEDFF /* FriendCollectionController.swift in Sources */,
 				4D86374325CC66ED00662B20 /* UITableView+Ext.swift in Sources */,
 				4DAF93F6258E38A4007FEDFF /* News.swift in Sources */,

@@ -7,16 +7,22 @@
 
 import UIKit
 import RealmSwift
+import FirebaseDatabase
 
 class UserGroupsController: UITableViewController {
     
     private let isMember = 1
     
-    fileprivate var notificationToken: NotificationToken?
+//    fileprivate var notificationToken: NotificationToken?
+//
+//    private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id")
+//
+//    private lazy var filteredGroups = groups
+//
     
-    private lazy var groups = try? Realm().objects(Group.self).filter("isMember = %@", String(isMember)).sorted(byKeyPath: "id")
-
-    private lazy var filteredGroups = groups
+    private var groups = [FirebaseGroup]()
+    private let ref = Database.database(url: "https://vkapp-746cc-default-rtdb.europe-west1.firebasedatabase.app/") .reference(withPath: "Groups of User: \(Session.shared.userId)")
+    
     
     private let searchController = UISearchController(searchResultsController: nil)
     
@@ -32,38 +38,52 @@ class UserGroupsController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        notificationToken = filteredGroups?.observe { [weak self] change in
-            guard let self = self else { return }
-            switch change {
-            case .initial:
-                print("CASE INITIAL")
-                self.tableView.reloadData()
-            case let .update(_, deletions, insertions, modifications):
-                self.tableView.update(deletions: deletions, insertions: insertions, modifications: modifications)
-                print(deletions)
-                print(insertions)
-                print(modifications)
-            case .error(let error):
-                print(error)
+        ref.observe(.value, with: { snapshot in
+            var groups: [FirebaseGroup] = []
+            
+            for child in snapshot.children {
+                if let snapshot = child as? DataSnapshot,
+                   let group = FirebaseGroup(snapshot: snapshot) {
+                    groups.append(group)
+                }
             }
-        }
+            self.groups = groups
+            self.tableView.reloadData()
+        })
+        
+//        notificationToken = filteredGroups?.observe { [weak self] change in
+//            guard let self = self else { return }
+//            switch change {
+//            case .initial:
+//                print("CASE INITIAL")
+//                self.tableView.reloadData()
+//            case let .update(_, deletions, insertions, modifications):
+//                self.tableView.update(deletions: deletions, insertions: insertions, modifications: modifications)
+//                print(deletions)
+//                print(insertions)
+//                print(modifications)
+//            case .error(let error):
+//                print(error)
+//            }
+//        }
         
     }
     
-    deinit {
-        notificationToken?.invalidate()
-    }
+//    deinit {
+//        notificationToken?.invalidate()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+    
         
         
-        NetworkService.loadUserGroups(token: Session.shared.token,
-                                  userId: Session.shared.userId) { [weak self] groups in
-            try? RealmService.save(items: groups)
-            self?.tableView.reloadData()
-        }
+//        NetworkService.loadUserGroups(token: Session.shared.token,
+//                                  userId: Session.shared.userId) { [weak self] groups in
+//            try? RealmService.save(items: groups)
+//            self?.tableView.reloadData()
+//        }
         
      
         
@@ -88,7 +108,7 @@ class UserGroupsController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return filteredGroups?.count ?? 0
+        return groups.count
     }
     
     override func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
@@ -103,17 +123,28 @@ class UserGroupsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell,
-            let group = filteredGroups?[indexPath.row]
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell
         else { return UITableViewCell() }
         
-       
-            cell.configure(with: group)
+        let group = groups[indexPath.row]
+        
+        cell.groupName.text = group.groupName
+        
         
         return cell
+        
+        
+//        guard
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "UserGroupCell", for: indexPath) as? UserGroupCell,
+//            let group = filteredGroups[indexPath.row]
+//
+//        else { return UITableViewCell() }
+//
+//
+//            cell.configure(with: group)
+//
+//        return cell
     }
 
     @IBAction func addGroup(segue: UIStoryboardSegue) {
@@ -124,20 +155,33 @@ class UserGroupsController: UITableViewController {
             
             if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
                 
-                guard let group = allGroupsController.groups?[indexPath.row] else { return }
+                guard
+                    let newGroupName = allGroupsController.groups?[indexPath.row].name,
+                    let newGroupId = allGroupsController.groups?[indexPath.row].id
+                      else { return }
                 
-                NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
+                let group = FirebaseGroup(groupName: newGroupName, groupId: newGroupId)
                 
+                let groupRef = self.ref.child(newGroupName)
                 
-                do {
-                    let realm = try Realm()
-                    try realm.write{
-                        group.isMember = "1"
-                        realm.add(group, update: .modified)
-                    }
-                } catch {
-                    print(error)
-                }
+                groupRef.setValue(group.toAnyObject())
+                
+            
+                
+//                guard let group = allGroupsController.groups?[indexPath.row] else { return }
+//
+//                NetworkService.joinGroup(token: Session.shared.token, groupId: group.id)
+//
+//
+//                do {
+//                    let realm = try Realm()
+//                    try realm.write{
+//                        group.isMember = "1"
+//                        realm.add(group, update: .modified)
+//                    }
+//                } catch {
+//                    print(error)
+//                }
             }
         }
     }
@@ -147,20 +191,23 @@ class UserGroupsController: UITableViewController {
 
             if editingStyle == .delete {
                 
-                guard let group = filteredGroups?[indexPath.row] else { return }
-
-                NetworkService.leaveGroup(token: Session.shared.token, groupId: group.id)
-
-                do {
-                    let realm = try Realm()
-                    realm.beginWrite()
-                    group.isMember = "0"
-                    realm.add(group, update: .modified)
-                    try realm.commitWrite()
-                } catch {
-                    print(error)
-                }
-  
+                let group = groups[indexPath.row]
+                group.ref?.removeValue()
+//
+//                guard let group = filteredGroups?[indexPath.row] else { return }
+//
+//                NetworkService.leaveGroup(token: Session.shared.token, groupId: group.id)
+//
+//                do {
+//                    let realm = try Realm()
+//                    realm.beginWrite()
+//                    group.isMember = "0"
+//                    realm.add(group, update: .modified)
+//                    try realm.commitWrite()
+//                } catch {
+//                    print(error)
+//                }
+//
             }
         
         }
@@ -175,15 +222,17 @@ extension UserGroupsController: UISearchResultsUpdating {
     }
     
     private func filterContentForSearchText(_ searchText: String) {
-        let predicate = NSPredicate(format: "name contains[cd] %@", searchText)
         
-        if searchText.isEmpty {
-            filteredGroups = groups
-            tableView.reloadData()
-            return
-        }
+//        let predicate = NSPredicate(format: "name contains[cd] %@", searchText)
         
-        filteredGroups = groups?.filter(predicate)
+//        if searchText.isEmpty {
+//            filteredGroups = groups
+//            tableView.reloadData()
+//            return
+//        }
+//
+        
+//        filteredGroups = groups?.filter(predicate)
         
         tableView.reloadData()
     }
