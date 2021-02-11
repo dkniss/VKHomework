@@ -36,12 +36,8 @@ class FriendsViewController: UITableViewController {
             switch change {
             case .initial:
                 self.tableView.reloadData()
-            
-            case let .update(_, deletions, insertions, modifications):
-                self.tableView.update(deletions: deletions, insertions: insertions, modifications: modifications,sections: self.firstLetters.count)
-                print(deletions)
-                print(insertions)
-                print(modifications)
+            case .update:
+                self.tableView.reloadData()
             case .error(let error):
                 print(error)
             }
