@@ -10,36 +10,106 @@ import Kingfisher
 
 class NewsViewController: UITableViewController {
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
+    
     var news = [News]()
     var users = [User]()
     var groups = [Group]()
+    var nextFrom: String = ""
+    var isLoading = false
+    
+    private let refresher = UIRefreshControl()
 
+   
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//
+//        func setupRefreshControl() {
+//            tableView.refreshControl = refresher
+//
+//            refresher.addTarget(self, action: #selector(pulledToRefresh), for: .valueChanged)
+//
+//            tableView.tableFooterView?.isHidden = true
+//
+//        }
+        
+        
+        
+        
+        
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
         
-        NetworkService.loadNewsFeed(token: Session.shared.token) { [weak self] news, users, groups in
+        
+//        setupRefreshControl()
+//        refresher.beginRefreshing()
+        getNewsFeed()
+    }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+         let currentOffset = scrollView.contentOffset.y
+         let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+         let deltaOffset = maximumOffset - currentOffset
+         
+         if deltaOffset <= 0 {
+             loadMore()
+         }
+     }
+        
+    func loadMore() {
+        if !isLoading {
+            self.isLoading = true
+            self.activityIndicator.startAnimating()
+            self.tableView.tableFooterView?.isHidden = false
+            self.getNewsFeed()
+            DispatchQueue.global().async {
+                sleep(2)
+                
+                DispatchQueue.main.async {
+                    
+                    self.tableView.reloadData()
+                    self.isLoading = false
+                    self.activityIndicator.stopAnimating()
+                    self.tableView.tableFooterView?.isHidden = true
+                }
+            }
+        }
+    }
+    
+    func stopRefreshing() {
+        if self.refresher.isRefreshing {
+            self.refresher.endRefreshing()
+        }
+    }
+    
+   
+    
+    func getNewsFeed() {
+        NetworkService.loadNewsFeed(token: Session.shared.token, from: nextFrom) { [weak self] news, users, groups, nextFrom in
             self?.news = news
             self?.users = users
             self?.groups = groups
+            self?.nextFrom = nextFrom
+            self?.stopRefreshing()
             self?.tableView.reloadData()
         }
-        
     }
-
+    
+    @objc func pulledToRefresh() {
+        getNewsFeed()
+    }
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return news.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else { return UITableViewCell() }
@@ -66,7 +136,7 @@ class NewsViewController: UITableViewController {
         
         return cell
     }
-
+    
 
 
     /*

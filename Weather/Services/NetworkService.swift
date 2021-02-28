@@ -177,16 +177,20 @@ class NetworkService {
         }
     }
     
-    static func loadNewsFeed(token: String, completion: @escaping ([News], [User], [Group]) -> Void ) {
+    static func loadNewsFeed(token: String, from: String, completion: @escaping ([News], [User], [Group], String) -> Void ) {
         let host = "https://api.vk.com"
         let path = "/method/newsfeed.get"
         
         let params: Parameters = [
             "access_token": token,
             "filters": "post",
-            "v": "5.130"
+            "v": "5.130",
+            "start_from": from
+            
         ]
         
+       
+
         AF.request(host + path, method: .get, parameters: params).responseData { response in
             switch response.result {
             case .success(let data):
@@ -198,7 +202,8 @@ class NetworkService {
                 let news = postJSONs.compactMap{ News($0) }
                 let users = usersJSONs.compactMap{ User($0) }
                 let groups = groupsJSons.compactMap{ Group($0) }
-                completion(news, users, groups)
+                let nextFrom = json["response"]["next_from"].stringValue
+                completion(news, users, groups, nextFrom)
             case .failure(let error):
                 print(error)
             }
