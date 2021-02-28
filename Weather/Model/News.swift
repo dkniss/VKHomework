@@ -8,7 +8,7 @@
 import Foundation
 import SwiftyJSON
 
-class News {
+struct News {
     var authorAvatar: String = ""
     var authorName: String = ""
     var newsText: String = ""
@@ -35,9 +35,7 @@ class News {
 
         self.sourceId = json["source_id"].intValue
         
-        if sourceId > 0 {
-            
-        }
+       
             
         
  

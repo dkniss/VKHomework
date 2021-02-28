@@ -177,7 +177,7 @@ class NetworkService {
         }
     }
     
-    static func loadNewsFeed(token: String, completion: @escaping ([News]) -> Void ) {
+    static func loadNewsFeed(token: String, completion: @escaping ([News], [User], [Group]) -> Void ) {
         let host = "https://api.vk.com"
         let path = "/method/newsfeed.get"
         
@@ -191,10 +191,14 @@ class NetworkService {
             switch response.result {
             case .success(let data):
                 let json = JSON(data)
-                let postJSONS = json["response"]["items"].arrayValue
-                print("postJSONS: \(postJSONS)")
-                let news = postJSONS.compactMap{ News($0) }
-                completion(news)
+                let postJSONs = json["response"]["items"].arrayValue
+                let usersJSONs = json["response"]["profiles"].arrayValue
+                let groupsJSons = json["response"]["groups"].arrayValue
+                print("postJSONS: \(groupsJSons)")
+                let news = postJSONs.compactMap{ News($0) }
+                let users = usersJSONs.compactMap{ User($0) }
+                let groups = groupsJSons.compactMap{ Group($0) }
+                completion(news, users, groups)
             case .failure(let error):
                 print(error)
             }

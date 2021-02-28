@@ -17,6 +17,7 @@
 		4D07B31E25780EBF00575C70 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B31D25780EBF00575C70 /* WeatherTests.swift */; };
 		4D07B32925780EBF00575C70 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B32825780EBF00575C70 /* WeatherUITests.swift */; };
 		4D07B33A25780ED200575C70 /* VKLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D07B33925780ED200575C70 /* VKLoginViewController.swift */; };
+		4D1A51C325EBE5F5000EA98F /* NewsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1A51C225EBE5F5000EA98F /* NewsParser.swift */; };
 		4D1B311E2581484800D1C5DC /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B311D2581484800D1C5DC /* FriendsViewController.swift */; };
 		4D1B31232581485E00D1C5DC /* FriendsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B31222581485E00D1C5DC /* FriendsCell.swift */; };
 		4D1B314F2582588C00D1C5DC /* FriendCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B314E2582588C00D1C5DC /* FriendCell.swift */; };
@@ -81,6 +82,7 @@
 		4D07B32825780EBF00575C70 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
 		4D07B32A25780EBF00575C70 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D07B33925780ED200575C70 /* VKLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VKLoginViewController.swift; sourceTree = "<group>"; };
+		4D1A51C225EBE5F5000EA98F /* NewsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsParser.swift; sourceTree = "<group>"; };
 		4D1B311D2581484800D1C5DC /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		4D1B31222581485E00D1C5DC /* FriendsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsCell.swift; sourceTree = "<group>"; };
 		4D1B314E2582588C00D1C5DC /* FriendCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCell.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		4D07B30525780EBE00575C70 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				4D1A51C725EBE69E000EA98F /* Parsers */,
 				4D86374125CC66D100662B20 /* Extensoins */,
 				4D5CA2A425B31B4C0088D9C5 /* Services */,
 				4DB750EB25AB320E00D53FB9 /* UIHelpers */,
@@ -204,6 +207,14 @@
 				4D07B32A25780EBF00575C70 /* Info.plist */,
 			);
 			path = WeatherUITests;
+			sourceTree = "<group>";
+		};
+		4D1A51C725EBE69E000EA98F /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				4D1A51C225EBE5F5000EA98F /* NewsParser.swift */,
+			);
+			path = Parsers;
 			sourceTree = "<group>";
 		};
 		4D1B3118258146DD00D1C5DC /* Friends */ = {
@@ -544,6 +555,7 @@
 				4DB750ED25AB322600D53FB9 /* Animator.swift in Sources */,
 				4D1B315A25825CD900D1C5DC /* UserGroupsController.swift in Sources */,
 				4D1B316225825CF400D1C5DC /* UserGroupCell.swift in Sources */,
+				4D1A51C325EBE5F5000EA98F /* NewsParser.swift in Sources */,
 				4D1B316C25825FB300D1C5DC /* AllGroupsController.swift in Sources */,
 				4D1B311E2581484800D1C5DC /* FriendsViewController.swift in Sources */,
 				4DAF9443259A534F007FEDFF /* DetailFriendPhotoController.swift in Sources */,

@@ -6,20 +6,28 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsViewController: UITableViewController {
     
     var news = [News]()
+    var users = [User]()
+    var groups = [Group]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
         
-        NetworkService.loadNewsFeed(token: Session.shared.token) { [weak self] news in
+        NetworkService.loadNewsFeed(token: Session.shared.token) { [weak self] news, users, groups in
             self?.news = news
+            self?.users = users
+            self?.groups = groups
             self?.tableView.reloadData()
         }
+        
+
+        
         
     }
 
@@ -41,7 +49,15 @@ class NewsViewController: UITableViewController {
         
         let currentNews = news[indexPath.row]
         
+        if currentNews.sourceId > 0 {
+            cell.authorName.text = users[indexPath.row].firstName
+        } else {
+            cell.authorName.text = groups[indexPath.row].name
+        }
+        
         cell.configure(with: currentNews)
+        
+        
         
         return cell
     }
