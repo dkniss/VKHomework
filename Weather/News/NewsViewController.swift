@@ -26,26 +26,10 @@ class NewsViewController: UITableViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-//
-            countRow = news.count
-//        func setupRefreshControl() {
-//            tableView.refreshControl = refresher
-//
-//            refresher.addTarget(self, action: #selector(pulledToRefresh), for: .valueChanged)
-//
-//            tableView.tableFooterView?.isHidden = true
-//
-//        }
-        
-        
-        
-        
-        
+
+
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
-        
-        
-//        setupRefreshControl()
-//        refresher.beginRefreshing()
+
         getNewsFeed()
     }
     
@@ -79,28 +63,18 @@ class NewsViewController: UITableViewController {
         }
     }
     
-    func stopRefreshing() {
-        if self.refresher.isRefreshing {
-            self.refresher.endRefreshing()
-        }
-    }
-    
-   
-    
+ 
     func getNewsFeed() {
         NetworkService.loadNewsFeed(token: Session.shared.token, from: nextFrom) { [weak self] news, users, groups, nextFrom in
             self?.news += news
             self?.users = users
             self?.groups = groups
             self?.nextFrom = nextFrom
-            self?.stopRefreshing()
             self?.tableView.reloadData()
         }
     }
     
-    @objc func pulledToRefresh() {
-        getNewsFeed()
-    }
+
     
     // MARK: - Table view data source
     
