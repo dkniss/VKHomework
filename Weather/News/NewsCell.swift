@@ -43,6 +43,8 @@ class NewsCell: UITableViewCell {
     }
     
     func configure(with news: News) {
+        let newsImageUrl = URL(string: news.newsImage)
+        newsImage.kf.setImage(with: newsImageUrl)
         newsText.text = news.newsText
         
     }
