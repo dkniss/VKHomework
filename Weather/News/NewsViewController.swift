@@ -26,9 +26,6 @@ class NewsViewController: UITableViewController {
             self?.tableView.reloadData()
         }
         
-
-        
-        
     }
 
     // MARK: - Table view data source
@@ -49,18 +46,27 @@ class NewsViewController: UITableViewController {
         
         let currentNews = news[indexPath.row]
         
+        
         if currentNews.sourceId > 0 {
-            cell.authorName.text = users[indexPath.row].firstName
+            let user = users.filter{ $0.id == currentNews.sourceId }
+            cell.authorName.text = user.first?.firstName
+            let url = URL(string: user.first?.photo ?? "")
+            cell.authorAvatar.kf.setImage(with: url)
         } else {
-            cell.authorName.text = groups[indexPath.row].name
+            let group = groups.filter{ $0.id == -currentNews.sourceId }
+            cell.authorName.text = group.first?.name
+            let url = URL(string: group.first?.photo ?? "")
+            cell.authorAvatar.kf.setImage(with: url)
         }
         
-        cell.configure(with: currentNews)
+        cell.configurePost(with: currentNews)
+        
         
         
         
         return cell
     }
+
 
 
     /*

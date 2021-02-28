@@ -42,10 +42,14 @@ class NewsCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(with news: News) {
+    func configurePost(with news: News) {
         let newsImageUrl = URL(string: news.newsImage)
         newsImage.kf.setImage(with: newsImageUrl)
         newsText.text = news.newsText
+        
+    }
+    
+    func configureHeader(with users: User) {
         
     }
     
