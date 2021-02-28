@@ -49,7 +49,7 @@ class NewsViewController: UITableViewController {
         
         if currentNews.sourceId > 0 {
             let user = users.filter{ $0.id == currentNews.sourceId }
-            cell.authorName.text = user.first?.firstName
+            cell.authorName.text = user.first!.firstName + " " + user.first!.lastName
             let url = URL(string: user.first?.photo ?? "")
             cell.authorAvatar.kf.setImage(with: url)
         } else {
