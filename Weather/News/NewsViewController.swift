@@ -9,17 +9,17 @@ import UIKit
 
 class NewsViewController: UITableViewController {
     
-    var news = [News(userAvatar: UIImage(named: "userPhoto"), username: "Иван Иванов", userText: "Водопад представляет собой водный поток, падающий с крутого обрыва. Часто крупные водопады состоят из цепочки мелких порогов и каскадов.", newsImage: UIImage(named: "waterfall")),
-                News(userAvatar: UIImage(named: "userPhoto"), username: "Игнат Румянцев", userText: "Город — крупный населённый пункт, жители которого заняты, как правило, не сельским хозяйством. Имеет развитый комплекс хозяйства и экономики.", newsImage: UIImage(named: "city")),
-                News(userAvatar: UIImage(named: "userPhoto"), username: "Валерий Плеханов", userText: "Французский бульдог — порода собак. Некрупная, отличающаяся крупной, но короткой мордой, плоским раздвоенным носом, широкой раздвоенной верхней губой.", newsImage: UIImage(named: "frenchie")),
-                
-
-    ]
+    var news = [News]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
+        
+        NetworkService.loadNewsFeed(token: Session.shared.token) { [weak self] news in
+            self?.news = news
+            self?.tableView.reloadData()
+        }
         
     }
 
@@ -37,18 +37,13 @@ class NewsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else { return UITableViewCell() }
         
         let currentNews = news[indexPath.row]
         
-        cell?.userAvatar.image = currentNews.userAvatar
-        cell?.username.text = currentNews.username
-        cell?.userText.text = currentNews.userText
-        cell?.imageNews.image = currentNews.newsImage
-        cell?.userAvatar.contentMode = .scaleAspectFill
-        cell?.imageNews.contentMode = .scaleToFill
+        cell.configure(with: currentNews)
         
-        return cell!
+        return cell
     }
 
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -100,14 +100,14 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="authorAvatar" destination="Aje-SD-Iqa" id="onZ-mc-tOz"/>
+                <outlet property="authorName" destination="cqL-QW-H3S" id="rgo-AX-lxd"/>
                 <outlet property="commentButton" destination="rAl-zS-RzW" id="k5P-ng-MvT"/>
-                <outlet property="imageNews" destination="r0z-R9-fs6" id="hzN-Mc-Ntt"/>
+                <outlet property="newsImage" destination="r0z-R9-fs6" id="ylI-XN-pyb"/>
                 <outlet property="newsLikeButton" destination="BXf-yW-HQb" id="a9z-gi-Gb2"/>
                 <outlet property="newsLikeCounterLabel" destination="ACQ-Zv-wvm" id="vHR-aM-2ZG"/>
+                <outlet property="newsText" destination="5qf-Qv-LUg" id="YqJ-5x-yFh"/>
                 <outlet property="shareButton" destination="itY-yh-blT" id="nv1-CJ-MKD"/>
-                <outlet property="userAvatar" destination="Aje-SD-Iqa" id="Ss4-7F-9fn"/>
-                <outlet property="userText" destination="5qf-Qv-LUg" id="o8Q-4h-JIZ"/>
-                <outlet property="username" destination="cqL-QW-H3S" id="obb-I3-eVz"/>
             </connections>
             <point key="canvasLocation" x="169.56521739130437" y="185.15625"/>
         </tableViewCell>

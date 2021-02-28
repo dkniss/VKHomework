@@ -27,7 +27,7 @@ class VKLoginViewController: UIViewController{
                     URLQueryItem(name: "client_id", value: "7753980"),
                     URLQueryItem(name: "display", value: "mobile"),
                     URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
-                    URLQueryItem(name: "scope", value: "2048523"),
+                    URLQueryItem(name: "scope", value: "3501123"),
                     URLQueryItem(name: "response_type", value: "token"),
                     URLQueryItem(name: "v", value: "5.126"),
                     URLQueryItem(name: "state", value: "12346542")

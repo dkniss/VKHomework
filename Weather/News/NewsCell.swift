@@ -6,20 +6,21 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsCell: UITableViewCell {
 
-    @IBOutlet weak var userAvatar: UIImageView!
+    @IBOutlet weak var authorAvatar: UIImageView!
     
-    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var authorName: UILabel!
     
-    @IBOutlet weak var userText: UILabel! {
+    @IBOutlet weak var newsText: UILabel! {
         didSet {
-            userText.numberOfLines = 0
+            newsText.numberOfLines = 0
         }
     }
     
-    @IBOutlet weak var imageNews: UIImageView!
+    @IBOutlet weak var newsImage: UIImageView!
     
     @IBOutlet weak var newsLikeButton: UIButton!
     
@@ -41,8 +42,14 @@ class NewsCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configure(with news: News) {
+        newsText.text = news.newsText
+        
+    }
+    
     var likeCounter = 0
     var isLiked = false
+    
     
     @IBAction func likeButtonPressed(_ sender: Any) {
         
