@@ -12,11 +12,14 @@ class NewsViewController: UITableViewController {
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
+    
     var news = [News]()
     var users = [User]()
     var groups = [Group]()
     var nextFrom: String = ""
     var isLoading = false
+    var countRow = 0
+    
     
     private let refresher = UIRefreshControl()
 
@@ -24,6 +27,7 @@ class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //
+            countRow = news.count
 //        func setupRefreshControl() {
 //            tableView.refreshControl = refresher
 //
@@ -85,7 +89,7 @@ class NewsViewController: UITableViewController {
     
     func getNewsFeed() {
         NetworkService.loadNewsFeed(token: Session.shared.token, from: nextFrom) { [weak self] news, users, groups, nextFrom in
-            self?.news = news
+            self?.news += news
             self?.users = users
             self?.groups = groups
             self?.nextFrom = nextFrom
