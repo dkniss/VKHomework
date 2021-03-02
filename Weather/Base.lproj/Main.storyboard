@@ -415,12 +415,15 @@
                             <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-jj-R2h">
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="iYo-jj-R2h">
                                     <rect key="frame" x="197" y="12" width="20" height="20"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 </activityIndicatorView>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="iYo-jj-R2h" firstAttribute="centerX" secondItem="5wg-CS-BTD" secondAttribute="centerX" id="EZD-FL-rWi"/>
+                                <constraint firstItem="iYo-jj-R2h" firstAttribute="centerY" secondItem="5wg-CS-BTD" secondAttribute="centerY" id="nxd-32-FmA"/>
+                            </constraints>
                         </view>
                         <connections>
                             <outlet property="dataSource" destination="Rzd-EF-Fyh" id="S66-eu-Xli"/>
