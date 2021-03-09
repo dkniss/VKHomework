@@ -198,7 +198,7 @@ class NetworkService {
                 let postJSONs = json["response"]["items"].arrayValue
                 let usersJSONs = json["response"]["profiles"].arrayValue
                 let groupsJSons = json["response"]["groups"].arrayValue
-                print("postJSONS: \(groupsJSons)")
+                print("postJSONS: \(postJSONs)")
                 let news = postJSONs.compactMap{ News($0) }
                 let users = usersJSONs.compactMap{ User($0) }
                 let groups = groupsJSons.compactMap{ Group($0) }

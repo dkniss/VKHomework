@@ -22,9 +22,11 @@ class NewsCell: UITableViewCell {
     
     @IBOutlet weak var newsImage: UIImageView!
     
-    @IBOutlet weak var newsLikeButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
     
-    @IBOutlet weak var newsLikeCounterLabel: UILabel!
+    @IBOutlet weak var likesCount: UILabel!
+    @IBOutlet weak var commentsCount: UILabel!
+    @IBOutlet weak var repostsCount: UILabel!
     
     @IBOutlet weak var commentButton: UIButton!
     
@@ -46,6 +48,9 @@ class NewsCell: UITableViewCell {
         let newsImageUrl = URL(string: news.newsImage)
         newsImage.kf.setImage(with: newsImageUrl)
         newsText.text = news.newsText
+        likesCount.text = String(news.likesCount)
+        commentsCount.text = String(news.commentsCount)
+        repostsCount.text = String(news.repostsCount)
         
     }
     
@@ -63,11 +68,11 @@ class NewsCell: UITableViewCell {
         
         if isLiked == false {
             likeCounter = likeCounter + 1
-            newsLikeCounterLabel.text = "\(likeCounter)"
+            likesCount.text = "\(likeCounter)"
             isLiked = true
         } else {
             likeCounter = likeCounter - 1
-            newsLikeCounterLabel.text = "\(likeCounter)"
+            likesCount.text = "\(likeCounter)"
             isLiked = false
         }
             
@@ -75,14 +80,14 @@ class NewsCell: UITableViewCell {
 
     
     func animateLikeButton() {
-        UIView.transition(with: newsLikeButton,
+        UIView.transition(with: likeButton,
                           duration: 0.5,
                           options: .transitionCrossDissolve) {
             switch self.isLiked {
             case true:
-                self.newsLikeButton.setImage(UIImage(systemName: "heart"), for: .normal)
+                self.likeButton.setImage(UIImage(systemName: "heart"), for: .normal)
             case false:
-                self.newsLikeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+                self.likeButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
             }
         }
     }

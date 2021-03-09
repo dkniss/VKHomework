@@ -59,10 +59,10 @@
                             <imageReference key="image" image="arrowshape.turn.up.right" catalog="system" symbolScale="default"/>
                         </state>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACQ-Zv-wvm">
-                        <rect key="frame" x="38" y="563" width="13" height="23"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ACQ-Zv-wvm">
+                        <rect key="frame" x="38" y="563" width="40" height="23"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="13" id="uf1-Dj-tbu"/>
+                            <constraint firstAttribute="width" constant="40" id="PTA-Ux-Kl5"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <nil key="textColor"/>
@@ -74,28 +74,51 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oVg-G3-eqG">
+                        <rect key="frame" x="122" y="563" width="40" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="oXa-HG-h43"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PDX-Y1-NXs">
+                        <rect key="frame" x="215" y="563" width="40" height="23"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="40" id="bws-qO-vlq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="r0z-R9-fs6" secondAttribute="trailing" id="0iW-Oi-14P"/>
+                    <constraint firstItem="PDX-Y1-NXs" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="0on-ct-BRU"/>
                     <constraint firstItem="ACQ-Zv-wvm" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="3zq-SJ-BhJ"/>
                     <constraint firstItem="itY-yh-blT" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="6kC-Na-YNW"/>
                     <constraint firstItem="ACQ-Zv-wvm" firstAttribute="bottom" secondItem="pRi-g5-GR5" secondAttribute="bottomMargin" id="BF6-mr-su3"/>
                     <constraint firstItem="5qf-Qv-LUg" firstAttribute="top" secondItem="Aje-SD-Iqa" secondAttribute="bottom" constant="8" symbolic="YES" id="F4J-nD-EIU"/>
                     <constraint firstItem="ACQ-Zv-wvm" firstAttribute="leading" secondItem="BXf-yW-HQb" secondAttribute="trailing" constant="1" id="I83-TA-h9x"/>
+                    <constraint firstItem="PDX-Y1-NXs" firstAttribute="leading" secondItem="itY-yh-blT" secondAttribute="trailing" id="IEU-cM-8gv"/>
                     <constraint firstAttribute="bottom" secondItem="BXf-yW-HQb" secondAttribute="bottom" constant="11" id="LNZ-UN-G6C"/>
                     <constraint firstItem="5qf-Qv-LUg" firstAttribute="trailing" secondItem="pRi-g5-GR5" secondAttribute="trailingMargin" id="MZ5-ve-GF6"/>
                     <constraint firstItem="5qf-Qv-LUg" firstAttribute="leading" secondItem="pRi-g5-GR5" secondAttribute="leadingMargin" id="MZo-a1-CId"/>
                     <constraint firstItem="BXf-yW-HQb" firstAttribute="leading" secondItem="pRi-g5-GR5" secondAttribute="leading" constant="7" id="Mhq-t3-oo3"/>
-                    <constraint firstItem="itY-yh-blT" firstAttribute="leading" secondItem="rAl-zS-RzW" secondAttribute="trailing" constant="63" id="MyF-YF-LC2"/>
-                    <constraint firstItem="rAl-zS-RzW" firstAttribute="leading" secondItem="ACQ-Zv-wvm" secondAttribute="trailing" constant="41" id="OAU-2v-U2j"/>
+                    <constraint firstItem="rAl-zS-RzW" firstAttribute="leading" secondItem="ACQ-Zv-wvm" secondAttribute="trailing" constant="14" id="OEK-8o-kaZ"/>
                     <constraint firstItem="r0z-R9-fs6" firstAttribute="leading" secondItem="pRi-g5-GR5" secondAttribute="leading" id="Pk2-Jl-uNJ"/>
                     <constraint firstItem="5qf-Qv-LUg" firstAttribute="top" secondItem="cqL-QW-H3S" secondAttribute="bottom" constant="8" symbolic="YES" id="RHE-ZQ-XfP"/>
                     <constraint firstItem="BXf-yW-HQb" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="TIS-PQ-ytM"/>
                     <constraint firstItem="rAl-zS-RzW" firstAttribute="bottom" secondItem="pRi-g5-GR5" secondAttribute="bottomMargin" id="Vzc-Cz-xd2"/>
+                    <constraint firstAttribute="trailing" secondItem="PDX-Y1-NXs" secondAttribute="trailing" constant="159" id="XKH-Lz-VgY"/>
                     <constraint firstAttribute="trailing" secondItem="cqL-QW-H3S" secondAttribute="trailing" constant="88" id="dv0-yx-P4U"/>
+                    <constraint firstItem="itY-yh-blT" firstAttribute="leading" secondItem="oVg-G3-eqG" secondAttribute="trailing" constant="23" id="gbl-sr-7A3"/>
                     <constraint firstItem="rAl-zS-RzW" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="hUi-tm-6bB"/>
                     <constraint firstItem="r0z-R9-fs6" firstAttribute="top" secondItem="5qf-Qv-LUg" secondAttribute="bottom" constant="8" symbolic="YES" id="jpL-1a-jZa"/>
                     <constraint firstItem="cqL-QW-H3S" firstAttribute="top" secondItem="pRi-g5-GR5" secondAttribute="top" constant="18" id="sxa-NQ-Tr3"/>
+                    <constraint firstItem="oVg-G3-eqG" firstAttribute="top" secondItem="r0z-R9-fs6" secondAttribute="bottom" constant="8" symbolic="YES" id="tgZ-0R-aJd"/>
+                    <constraint firstItem="oVg-G3-eqG" firstAttribute="leading" secondItem="rAl-zS-RzW" secondAttribute="trailing" id="uaO-Yz-djz"/>
                     <constraint firstItem="cqL-QW-H3S" firstAttribute="leading" secondItem="Aje-SD-Iqa" secondAttribute="trailing" constant="24" id="xHR-DX-Jos"/>
                 </constraints>
             </tableViewCellContentView>
@@ -103,10 +126,12 @@
                 <outlet property="authorAvatar" destination="Aje-SD-Iqa" id="onZ-mc-tOz"/>
                 <outlet property="authorName" destination="cqL-QW-H3S" id="rgo-AX-lxd"/>
                 <outlet property="commentButton" destination="rAl-zS-RzW" id="k5P-ng-MvT"/>
+                <outlet property="commentsCount" destination="oVg-G3-eqG" id="iZp-6B-s4n"/>
+                <outlet property="likeButton" destination="BXf-yW-HQb" id="yMV-I4-DAo"/>
+                <outlet property="likesCount" destination="ACQ-Zv-wvm" id="QCz-Dt-aTp"/>
                 <outlet property="newsImage" destination="r0z-R9-fs6" id="ylI-XN-pyb"/>
-                <outlet property="newsLikeButton" destination="BXf-yW-HQb" id="a9z-gi-Gb2"/>
-                <outlet property="newsLikeCounterLabel" destination="ACQ-Zv-wvm" id="vHR-aM-2ZG"/>
                 <outlet property="newsText" destination="5qf-Qv-LUg" id="YqJ-5x-yFh"/>
+                <outlet property="repostsCount" destination="PDX-Y1-NXs" id="GM0-mx-SBc"/>
                 <outlet property="shareButton" destination="itY-yh-blT" id="nv1-CJ-MKD"/>
             </connections>
             <point key="canvasLocation" x="169.56521739130437" y="185.15625"/>
