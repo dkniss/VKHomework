@@ -19,6 +19,7 @@ struct News {
     var likesCount: Int = 0
     var commentsCount: Int = 0
     var repostsCount: Int = 0
+    var postType: String = ""
     
     init(_ json: JSON) {
         
@@ -36,7 +37,7 @@ struct News {
         self.likesCount = json["likes"]["count"].intValue
         self.commentsCount = json["comments"]["count"].intValue
         self.repostsCount = json["reposts"]["count"].intValue
-        
+        self.postType = json["post_type"].stringValue
        
             
         

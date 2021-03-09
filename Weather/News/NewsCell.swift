@@ -54,6 +54,7 @@ class NewsCell: UITableViewCell {
         
     }
     
+    
     func configureHeader(with users: User) {
         
     }

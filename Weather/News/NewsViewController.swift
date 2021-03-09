@@ -66,11 +66,16 @@ class NewsViewController: UITableViewController {
  
     func getNewsFeed() {
         NetworkService.loadNewsFeed(token: Session.shared.token, from: nextFrom) { [weak self] news, users, groups, nextFrom in
-            self?.news += news
-            self?.users = users
-            self?.groups = groups
-            self?.nextFrom = nextFrom
-            self?.tableView.reloadData()
+            let dispatchGroup = DispatchGroup()
+            DispatchQueue.global().async(group: dispatchGroup) {
+                self?.news += news
+                self?.users = users
+                self?.groups = groups
+                self?.nextFrom = nextFrom
+                dispatchGroup.notify(queue: DispatchQueue.main) {
+                    self?.tableView.reloadData()
+                }
+            }
         }
     }
     
@@ -90,9 +95,9 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else { return UITableViewCell() }
-        
         let currentNews = news[indexPath.row]
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as? NewsCell else { return UITableViewCell() }
         
         
         if currentNews.sourceId > 0 {
@@ -107,6 +112,7 @@ class NewsViewController: UITableViewController {
             cell.authorAvatar.kf.setImage(with: url)
         }
         
+        
         cell.configurePost(with: currentNews)
         
         
@@ -114,6 +120,8 @@ class NewsViewController: UITableViewController {
         
         return cell
     }
+    
+
     
 
 
