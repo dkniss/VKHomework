@@ -59,11 +59,13 @@ class NewsCell: UITableViewCell {
         
     }
     
-    var likeCounter = 0
+    
     var isLiked = false
     
     
     @IBAction func likeButtonPressed(_ sender: Any) {
+        
+        guard var likeCounter = Int(likesCount.text ?? "0") else { return }
         
         animateLikeButton()
         

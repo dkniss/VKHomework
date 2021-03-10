@@ -29,7 +29,7 @@ class NewsViewController: UITableViewController {
 
 
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
-
+        
         getNewsFeed()
     }
     
@@ -65,16 +65,14 @@ class NewsViewController: UITableViewController {
     
  
     func getNewsFeed() {
-        NetworkService.loadNewsFeed(token: Session.shared.token, from: nextFrom) { [weak self] news, users, groups, nextFrom in
-            let dispatchGroup = DispatchGroup()
-            DispatchQueue.global().async(group: dispatchGroup) {
+        DispatchQueue.global().async {
+            
+            NetworkService.loadNewsFeed(token: Session.shared.token, from: self.nextFrom) { [weak self] news, users, groups, nextFrom in
                 self?.news += news
                 self?.users = users
                 self?.groups = groups
                 self?.nextFrom = nextFrom
-                dispatchGroup.notify(queue: DispatchQueue.main) {
-                    self?.tableView.reloadData()
-                }
+                self?.tableView.reloadData()
             }
         }
     }
