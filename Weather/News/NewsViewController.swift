@@ -65,16 +65,21 @@ class NewsViewController: UITableViewController {
     
  
     func getNewsFeed() {
-        DispatchQueue.global().async {
+        let dispatchGroup = DispatchGroup()
+        DispatchQueue.global().async(group: dispatchGroup) {
             
             NetworkService.loadNewsFeed(token: Session.shared.token, from: self.nextFrom) { [weak self] news, users, groups, nextFrom in
                 self?.news += news
                 self?.users = users
                 self?.groups = groups
                 self?.nextFrom = nextFrom
-                self?.tableView.reloadData()
             }
         }
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) {
+            self.tableView.reloadData()
+        }
+        
     }
     
 
