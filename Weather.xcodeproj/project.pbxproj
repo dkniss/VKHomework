@@ -28,6 +28,8 @@
 		4D1B317E25826CE900D1C5DC /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1B317D25826CE900D1C5DC /* Group.swift */; };
 		4D285C7925B9DB1200547F55 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D285C7825B9DB1200547F55 /* Photo.swift */; };
 		4D2D247225D043CC0030BBAC /* UICollectionView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2D247125D043CC0030BBAC /* UICollectionView+Ext.swift */; };
+		4D3B314A25FA422600892732 /* OperationsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3B314925FA422600892732 /* OperationsManager.swift */; };
+		4D3B315325FA425600892732 /* FilteringOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3B315225FA425600892732 /* FilteringOperations.swift */; };
 		4D48FF7325C6D32800A01B62 /* RealmService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D48FF7225C6D32800A01B62 /* RealmService.swift */; };
 		4D5CA2A625B31B5E0088D9C5 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */; };
 		4D86374325CC66ED00662B20 /* UITableView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D86374225CC66ED00662B20 /* UITableView+Ext.swift */; };
@@ -92,6 +94,8 @@
 		4D1B317D25826CE900D1C5DC /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
 		4D285C7825B9DB1200547F55 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		4D2D247125D043CC0030BBAC /* UICollectionView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Ext.swift"; sourceTree = "<group>"; };
+		4D3B314925FA422600892732 /* OperationsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OperationsManager.swift; sourceTree = "<group>"; };
+		4D3B315225FA425600892732 /* FilteringOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilteringOperations.swift; sourceTree = "<group>"; };
 		4D48FF7225C6D32800A01B62 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		4D5CA2A525B31B5E0088D9C5 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		4D86374225CC66ED00662B20 /* UITableView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Ext.swift"; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 		4D07B30525780EBE00575C70 /* Weather */ = {
 			isa = PBXGroup;
 			children = (
+				4D3B314825FA421000892732 /* Operations */,
 				4D86374125CC66D100662B20 /* Extensoins */,
 				4D5CA2A425B31B4C0088D9C5 /* Services */,
 				4DB750EB25AB320E00D53FB9 /* UIHelpers */,
@@ -239,6 +244,15 @@
 				4D285C7825B9DB1200547F55 /* Photo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		4D3B314825FA421000892732 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				4D3B314925FA422600892732 /* OperationsManager.swift */,
+				4D3B315225FA425600892732 /* FilteringOperations.swift */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 		4D5CA2A425B31B4C0088D9C5 /* Services */ = {
@@ -557,7 +571,9 @@
 				4D5CA2A625B31B5E0088D9C5 /* NetworkService.swift in Sources */,
 				4D07B33A25780ED200575C70 /* VKLoginViewController.swift in Sources */,
 				4DB750FA25AB364C00D53FB9 /* CustomPush&Pop.swift in Sources */,
+				4D3B315325FA425600892732 /* FilteringOperations.swift in Sources */,
 				4DAF93D9258E0018007FEDFF /* FriendsSectionHeader.swift in Sources */,
+				4D3B314A25FA422600892732 /* OperationsManager.swift in Sources */,
 				4D1B317125826BE800D1C5DC /* User.swift in Sources */,
 				4DAF93B425890CC9007FEDFF /* Graphics.swift in Sources */,
 				4DAF93D1258A6F12007FEDFF /* FriendCollectionController.swift in Sources */,

@@ -26,10 +26,9 @@ class FriendsCell: UITableViewCell {
         
     }
 
-    func configure(with friends: User) {
-        username.text = String(friends.firstName + " " + friends.lastName)
-        
-        let url = URL(string: friends.photo)
+    func configure(with friend: User) {
+        username.text = String(friend.firstName + " " + friend.lastName)
+        let url = URL(string: friend.photo)
         avatar.kf.setImage(with: url)
         avatar.contentMode = .scaleAspectFill
     }

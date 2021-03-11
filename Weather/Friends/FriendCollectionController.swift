@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import Kingfisher
 
 
 
@@ -17,6 +18,10 @@ class FriendCollectionController: UICollectionViewController {
     private lazy var photo = try? Realm().objects(Photo.self).filter("ownerId == %@", String(user?.id ?? 0)).sorted(byKeyPath: "id")
     
     private var notificationToken: NotificationToken?
+    
+    private var operationManager = OperationsManager()
+    
+    private var photoCache = [IndexPath: UIImage]()
     
     var photoId = 0
     
@@ -67,16 +72,60 @@ class FriendCollectionController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-         guard
+        guard
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FriendCell", for: indexPath) as? FriendCell,
             let currentPhoto = photo?[indexPath.row]
-         else { return UICollectionViewCell() }
+        else { return UICollectionViewCell() }
         
-        cell.configure(with: currentPhoto)
-        
-        
-        
+        if let filteredImage = photoCache[indexPath] {
+            cell.photo.image = filteredImage
+        } else {
+            cell.photo.kf.setImage(with: URL(string: currentPhoto.url)) {[weak self] result in
+                guard let self = self else { return }
+                switch result {
+                case let .success(retriveImageResult):
+                    self.startFiltration(for: retriveImageResult.image, at: indexPath)
+                case .failure:
+                    print("❌ error while downloading image: \(currentPhoto.url)")
+                }
+            }
+        }
+   
+    
         return cell
+        
+    }
+    
+    private func startFiltration(for image: UIImage,
+                                 at indexPath: IndexPath) {
+        
+        
+        guard
+            operationManager.operationInProgress[indexPath] == nil
+        else {
+            print("Operation in Progress")
+            return
+        }
+        
+        let sepiaOperation = SepiaFilterOperation(image)
+        
+        sepiaOperation.completionBlock = { [weak self] in
+            guard
+                let self = self,
+                !sepiaOperation.isCancelled
+            else { return }
+            self.photoCache[indexPath] = sepiaOperation.image
+            self.operationManager.operationInProgress[indexPath] = nil
+            
+        }
+        
+        DispatchQueue.main.async {
+            self.collectionView.reloadItems(at: [indexPath])
+        }
+        
+        operationManager.operationInProgress[indexPath] = sepiaOperation
+        operationManager.filteringQ.addOperation(sepiaOperation)
+        
         
     }
     
@@ -108,3 +157,4 @@ class FriendCollectionController: UICollectionViewController {
     
     
 }
+

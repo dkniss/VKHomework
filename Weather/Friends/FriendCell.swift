@@ -38,11 +38,11 @@ class FriendCell: UICollectionViewCell {
             
     }
     
-    func configure(with photos: Photo) {
-        let url = URL(string: photos.url)
-        photo.kf.setImage(with: url)
-        photo.contentMode = .scaleAspectFill
-    }
+//    func configure(with photos: Photo) {
+//        let url = URL(string: photos.url)
+//        photo.kf.setImage(with: url)
+//        photo.contentMode = .scaleAspectFill
+//    }
     
     func animateLikeButton() {
         UIView.transition(with: likeButton,

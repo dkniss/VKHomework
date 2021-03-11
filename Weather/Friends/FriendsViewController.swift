@@ -8,6 +8,7 @@
 import UIKit
 import RealmSwift
 
+
 class FriendsViewController: UITableViewController {
     
     private lazy var friends = try? Realm().objects(User.self).sorted(byKeyPath: "id") {
@@ -27,6 +28,7 @@ class FriendsViewController: UITableViewController {
     
     var firstLetters = [Character]()
     var sortedFriends = [Character: [User]]()
+   
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -96,16 +98,18 @@ class FriendsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FriendsCell", for: indexPath) as! FriendsCell
         
         let firstLetter = firstLetters[indexPath.section]
-        if let friends = sortedFriends[firstLetter] {
+        if let friend = sortedFriends[firstLetter] {
+            
+            cell.configure(with: friend[indexPath.row])
         
-            cell.configure(with: friends[indexPath.row])
-
         }
         
             return cell
         
     }
     
+   
+
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
            guard let sectionHeader = tableView.dequeueReusableHeaderFooterView(withIdentifier: "FriendsSectionHeader") as? FriendsSectionHeader
@@ -174,13 +178,12 @@ class FriendsViewController: UITableViewController {
 
 extension FriendsViewController: UISearchBarDelegate {
     
-    
     func searchBar(_ searchBar:  UISearchBar, textDidChange searchText: String) {
-        filteredFriends(with: searchText)
+        filterFriends(with: searchText)
        
     }
     
-    fileprivate func filteredFriends(with searchText: String) {
+    fileprivate func filterFriends(with searchText: String) {
         
         let predicate: NSPredicate = NSPredicate(format: "SELF.firstName contains[cd] %@", searchText)
         filteredFriends = friends?.filter(predicate)
@@ -191,8 +194,8 @@ extension FriendsViewController: UISearchBarDelegate {
             return
         }
   
-//        filteredFriends = friends?.filter { $0.firstName.lowercased().contains(text.lowercased())}
         
         tableView.reloadData()
     }
 }
+
